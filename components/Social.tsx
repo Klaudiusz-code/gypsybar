@@ -39,7 +39,7 @@ const socials = [
 export default function SocialSection() {
   return (
     <section className="relative pt-32 pb-32 px-6 md:px-12 bg-[#0a1218] overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-px bg-[#0a1218]"></div>
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#a28468]/20 to-transparent"></div>
 
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-16">
@@ -87,7 +87,6 @@ export default function SocialSection() {
           ))}
         </div>
 
-      
         <div className="hidden md:grid md:grid-cols-3 gap-6">
           {socials.map((social, i) => (
             <a

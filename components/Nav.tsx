@@ -21,7 +21,7 @@ export default function Nav() {
       <nav
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${
           isScrolled
-            ? "bg-[#1b3745]/95 backdrop-blur-2xl shadow-2xl shadow-black/30 border-b border-[#a28468]/20"
+            ? "bg-[#0a1218]/95 backdrop-blur-2xl shadow-2xl shadow-black/30 border-b border-[#a28468]/20"
             : "group-hover:bg-[#1b3745]/80 group-hover:backdrop-blur-xl group-hover:shadow-lg group-hover:shadow-black/10 bg-transparent border-b border-transparent"
         }`}
       >
