@@ -18,6 +18,9 @@ export default function Contact() {
     setTimeout(() => setIsFormSent(false), 3000);
   };
 
+  // Pobiera dzisiejszą datę w formacie YYYY-MM-DD, żeby zablokować wybór przeszłości
+  const today = new Date().toISOString().split("T")[0];
+
   return (
     <section
       id="kontakt"
@@ -56,16 +59,20 @@ export default function Contact() {
               </label>
             </div>
 
+            {/* INPUT DATY - Zmieniony na type="date" z ciemnym schematem */}
             <div className="relative border-b border-[#FDFBF7]/10 focus-within:border-[#a28468] transition-colors pb-3">
               <input
-                type="text"
+                type="date"
                 id="date"
-                placeholder=" "
-                className="peer w-full bg-transparent text-[#FDFBF7] placeholder-transparent focus:outline-none text-sm"
+                min={today} // Blokuje daty z przeszłości
+                required
+                // [color-scheme:dark] to magiczny atrybut w Tailwind, który sprawia, że wyskakujący kalendarz jest ciemny!
+                className="w-full bg-transparent text-[#FDFBF7] focus:outline-none text-sm [color-scheme:dark]"
               />
               <label
                 htmlFor="date"
-                className="absolute left-0 top-0 text-sm text-[#FDFBF7]/20 transition-all peer-placeholder-shown:top-0 peer-placeholder-shown:text-base peer-focus:-top-5 peer-focus:text-[10px] peer-focus:text-[#a28468] peer-focus:tracking-widest peer-focus:uppercase peer-[:not(:placeholder-shown)]:-top-5 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:text-[#FDFBF7]/40"
+                // Dla daty etykieta jest zawsze "zawinięta" do góry, bo input date nie używa placeholdera
+                className="absolute left-0 -top-5 text-[10px] text-[#FDFBF7]/40 tracking-widest uppercase"
               >
                 Data imprezy
               </label>

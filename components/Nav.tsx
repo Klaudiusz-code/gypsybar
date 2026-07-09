@@ -9,6 +9,7 @@ import { navLinks } from "@/lib/data";
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [locale, setLocale] = useState("pl"); // Stan języka
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -63,6 +64,32 @@ export default function Nav() {
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
+            {/* PRZEŁĄCZNIK JĘZYKÓW */}
+            <div className="flex items-center bg-white/5 p-1 rounded-full border border-white/10">
+              <button
+                onClick={() => setLocale("pl")}
+                className={`px-2.5 py-1 rounded-full text-sm transition-all duration-300 ${
+                  locale === "pl"
+                    ? "bg-[#a28468]/20 shadow-sm border border-[#a28468]/30"
+                    : "hover:bg-white/5 border border-transparent"
+                }`}
+                aria-label="Polski"
+              >
+                🇵🇱
+              </button>
+              <button
+                onClick={() => setLocale("en")}
+                className={`px-2.5 py-1 rounded-full text-sm transition-all duration-300 ${
+                  locale === "en"
+                    ? "bg-[#a28468]/20 shadow-sm border border-[#a28468]/30"
+                    : "hover:bg-white/5 border border-transparent"
+                }`}
+                aria-label="English"
+              >
+                🇬🇧
+              </button>
+            </div>
+
             <div className="flex items-center gap-2">
               <a
                 href="#"
@@ -104,6 +131,7 @@ export default function Nav() {
         </div>
       </nav>
 
+      {/* MENU MOBILNE - bez zmian */}
       <div
         className={`fixed inset-0 bg-[#1b3745] z-[60] flex flex-col transition-all duration-700 lg:hidden ${
           isOpen
@@ -131,24 +159,29 @@ export default function Nav() {
             />
           </a>
 
-          <div className="flex items-center gap-3">
-            <a
-              href="#"
-              target="_blank"
-              className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/30 hover:text-[#a28468] hover:border-[#a28468]/30 transition-all"
+          {/* PRZEŁĄCZNIK JĘZYKÓW W MOBILNYM MENU */}
+          <div className="flex items-center bg-white/5 p-1 rounded-full border border-white/10">
+            <button
+              onClick={() => setLocale("pl")}
+              className={`px-2 py-1 rounded-full text-xs transition-all duration-300 ${
+                locale === "pl"
+                  ? "bg-[#a28468]/20 border border-[#a28468]/30"
+                  : "border border-transparent"
+              }`}
             >
-              <FaInstagram size={15} />
-            </a>
-            <a
-              href="#"
-              target="_blank"
-              className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/30 hover:text-[#a28468] hover:border-[#a28468]/30 transition-all"
+              🇵🇱
+            </button>
+            <button
+              onClick={() => setLocale("en")}
+              className={`px-2 py-1 rounded-full text-xs transition-all duration-300 ${
+                locale === "en"
+                  ? "bg-[#a28468]/20 border border-[#a28468]/30"
+                  : "border border-transparent"
+              }`}
             >
-              <FaFacebook size={15} />
-            </a>
+              🇬🇧
+            </button>
           </div>
-
-          <div className="w-px h-6 bg-white/10"></div>
 
           <button
             onClick={() => setIsOpen(false)}
