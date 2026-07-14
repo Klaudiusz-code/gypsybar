@@ -29,12 +29,14 @@ export const galleryImages = [
 ];
 
 export const drinks = [
-  { name: "Aperol Spritz", desc: "Aperol, Prosecco, Woda gazowana" },
-  { name: "Espresso Martini", desc: "Wódka, Kawa, Likier kawowy" },
-  { name: "Old Fashioned", desc: "Bourbon, Cukier, Angostura" },
-  { name: "Pornstar Martini", desc: "Wódka, Passiflora, Śmietanka" },
-  { name: "Classic Mojito", desc: "Rum biały, Mięta, Limonka" },
-  { name: "Whisky Sour", desc: "Whisky, Sok z cytryny, Białko" },
+  { name: "Aperol Spritz", desc: "Aperol, Pomarańcza, Prosecco" },
+  { name: "Hugo", desc: "Czarny Bez, Mięta, Prosecco" },
+  { name: "Porntstart Martini", desc: "Wódka, Marakuja, Prosseco" },
+  { name: "STARberry", desc: "Gin, Truskawka, Liście Kafiur, Brokat" },
+  { name: "French 75", desc: "Gin, Cytryna, Prosecco" },
+  { name: "Rhubarb Love", desc: "Wódka, Rabarbar, Winogrono, Biała herbata" },
+  { name: "Old Fashioned", desc: "Whiksy, Angostura, Cukier" },
+  { name: "Whisky Sour", desc: "Whisky, Białko, Cytyna, Angostura" },
 ];
 
 export const packages = [
