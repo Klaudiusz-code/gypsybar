@@ -7,6 +7,70 @@ import Menu from "@/components/Menu";
 import Packages from "@/components/Packages";
 import Faq from "@/components/Faq";
 import Contact from "@/components/Contact";
+import Experience from "@/components/Experience";
+
+export async function generateMetadata() {
+  return {
+    title: "Gypsy's Bar | Premium Mobile Cocktail Bar for Weddings & Events",
+
+    description:
+      "Gypsy's Bar creates unforgettable cocktail experiences for weddings, corporate events and private celebrations. Craft cocktails, handmade ingredients and professional mixology brought directly to your event.",
+
+    keywords: [
+      "mobile cocktail bar",
+      "wedding cocktail bar",
+      "event cocktail catering",
+      "premium cocktail service",
+      "bartender for weddings",
+      "craft cocktails",
+      "mixology events",
+    ],
+
+    openGraph: {
+      title: "Gypsy's Bar | Premium Mobile Cocktail Bar for Weddings & Events",
+
+      description:
+        "Premium mobile cocktail bar experience with handcrafted cocktails, professional mixologists and the atmosphere of a top cocktail bar brought to your event.",
+
+      url: "https://gypsysbar.pl/en",
+
+      siteName: "Gypsy's Bar",
+
+      locale: "en_US",
+
+      type: "website",
+
+      images: [
+        {
+          url: "/hero.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Gypsy's Bar Premium Mobile Cocktail Bar",
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+
+      title: "Gypsy's Bar | Premium Mobile Cocktail Bar",
+
+      description:
+        "Craft cocktails and professional mixology for weddings, events and private celebrations.",
+
+      images: ["https://cms.gypsysbar.pl/wp-content/uploads/2026/07/2.jpg"],
+    },
+
+    alternates: {
+      canonical: "https://gypsysbar.pl/en",
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 const QUERY_HOME_EN = `
 query HomePageEN {
@@ -153,6 +217,27 @@ query HomePageEN {
   }
 }
 
+
+    sekcjaDoswiadczenie {
+      malyNaglowek
+      tytul
+      years
+
+      punktyDoswiadczenia {
+        numer
+        tytul
+        opis
+      }
+
+      sekcjaOLokalu {
+        naglowekSekcji
+        nazwaLokalu
+        opisLokalu
+      }
+
+      cytat
+    }
+
     sekcjaFaq {
       faqLabel
       faqTitle
@@ -188,7 +273,7 @@ query HomePageEN {
 `;
 
 export default async function EnHomePage() {
-  const response = await fetch("https://cms.gypsysbar.pl/graphq", {
+  const response = await fetch("https://cms.gypsysbar.pl/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -221,6 +306,7 @@ export default async function EnHomePage() {
       <Stats data={page.sekcjaStatystyki} />
 
       <About data={page.sekcjaOMnie} />
+      <Experience data={page.sekcjaDoswiadczenie} />
 
       <Gallery data={page.sekcjaGaleria} />
 
