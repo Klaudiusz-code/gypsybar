@@ -283,7 +283,7 @@ query HomePage {
 `;
 
 export default async function PlHomePage() {
-  const response = await fetch("https://gypsysbar.pl/graphql", {
+  const response = await fetch("https://cms.gypsysbar.pl/graphql", {
     method: "POST",
 
     headers: {

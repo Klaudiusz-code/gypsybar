@@ -13,7 +13,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "https://gypsysbar.pl/graphqll",
+        hostname: "https://cms.gypsysbar.pl/graphq",
         pathname: "/gypsy-bar/wp-content/uploads/**",
       },
     ],

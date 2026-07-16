@@ -188,7 +188,7 @@ query HomePageEN {
 `;
 
 export default async function EnHomePage() {
-  const response = await fetch("https://gypsysbar.pl/graphql", {
+  const response = await fetch("https://cms.gypsysbar.pl/graphq", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
