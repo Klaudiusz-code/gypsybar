@@ -2,45 +2,14 @@
 
 import { useState } from "react";
 
-const testimonials = [
-  {
-    name: "Kasia & Tomek",
-    role: "Wesele, Sopot",
-    text: "Gypsy zrobił z naszego wesela coś, o czym goście rozmawiają do dziś. Koktajle były nie tylko piękne, ale niesamowicie smaczne.",
-  },
-  {
-    name: "Marta Ż.",
-    role: "Impreza firmowa, Warszawa",
-    text: "Profesjonalizm na najwyższym poziomie. Zero stresu z naszej strony, Gypsy zajął się wszystkim od A do Z.",
-  },
-  {
-    name: "Paweł K.",
-    role: "Urodziny, Kraków",
-    text: "Najlepsza decyzja, jaką mogłem podjąć. Barman, który nie tylko miesza drinki, ale tworzy cały show.",
-  },
-  {
-    name: "Agata & Jan",
-    role: "Wesele w plenerze, Mazury",
-    text: "Mimo trudnych warunków w plenerze, wszystko działało perfekcyjnie. Koktajle z lokalnymi owocami to był strzał w dziesiątkę.",
-  },
-  {
-    name: "Anna W.",
-    role: "Event korporacyjny, Gdańsk",
-    text: "Trzeci raz z Gypsy's na naszych eventach i za każdym razem poziom jest wyższy. Reakcje gości bezcenne.",
-  },
-  {
-    name: "Oliwia M.",
-    role: "Ślub, Łódź",
-    text: "Jedyna rzecz, o której nie musiałam myśleć w dniu ślubu. Gypsy przyszedł, ustawił bar i po prostu działał. Magia.",
-  },
-];
-
-export default function Testimonials() {
+export default function Testimonials({ data }: any) {
   const [active, setActive] = useState(0);
+
+  if (!data || !data.testimonialsItems) return null;
+  const items = data.testimonialsItems;
 
   const getClasses = (i: number) => {
     const diff = i - active;
-
     let mobile = "opacity-0 scale-95 z-0 pointer-events-none";
     if (diff === 0)
       mobile = "opacity-100 translate-x-0 scale-100 z-20 pointer-events-auto";
@@ -75,37 +44,31 @@ export default function Testimonials() {
       <div className="max-w-[1100px] mx-auto relative z-10">
         <div className="text-center mb-14 md:mb-16">
           <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-5 font-medium">
-            Opinie
+            {data.testimonialsLabel}
           </p>
           <h2 className="font-playfair text-3xl md:text-5xl text-[#FDFBF7] leading-tight">
-            Słowa, które{" "}
-            <span className="text-[#a28468]/50 italic font-light">
-              mają znaczenie.
-            </span>
+            {data.testimonialsTitle}
           </h2>
         </div>
 
         <div className="relative h-[360px] md:h-[300px]">
           <div className="absolute inset-0 flex items-center justify-center">
-            {testimonials.map((item, i) => (
+            {items.map((item: any, i: any) => (
               <button
                 key={i}
                 onClick={() => setActive(i)}
-                className={`
-                  absolute w-[88%] md:w-[420px] p-6 md:p-8 bg-[#0e1c22] rounded-sm cursor-pointer 
-                  transition-all duration-500 ease-out text-left border
-                  ${i === active ? "border-[#a28468]/20 shadow-xl shadow-black/30" : "border-white/[0.04]"}
-                  ${getClasses(i)}
-                `}
+                className={`absolute w-[88%] md:w-[420px] p-6 md:p-8 bg-[#0e1c22] rounded-sm cursor-pointer transition-all duration-500 ease-out text-left border ${
+                  i === active
+                    ? "border-[#a28468]/20 shadow-xl shadow-black/30"
+                    : "border-white/[0.04]"
+                } ${getClasses(i)}`}
               >
                 <span className="font-playfair text-2xl text-[#a28468]/20 leading-none block mb-3">
                   &ldquo;
                 </span>
-
                 <p className="text-[#FDFBF7]/40 text-sm leading-relaxed mb-6 line-clamp-4 md:line-clamp-3">
-                  {item.text}
+                  {item.content}
                 </p>
-
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-[#FDFBF7]/60 text-sm">{item.name}</p>
@@ -125,9 +88,7 @@ export default function Testimonials() {
         <div className="flex items-center justify-center gap-5 mt-8 md:mt-6">
           <button
             onClick={() =>
-              setActive(
-                (active - 1 + testimonials.length) % testimonials.length,
-              )
+              setActive((active - 1 + items.length) % items.length)
             }
             className="w-11 h-11 md:w-10 md:h-10 rounded-full border border-[#FDFBF7]/[0.08] flex items-center justify-center text-[#FDFBF7]/20 hover:border-[#a28468]/30 hover:text-[#a28468]/60 transition-all duration-300 active:scale-90"
             aria-label="Poprzednia"
@@ -150,12 +111,11 @@ export default function Testimonials() {
 
           <span className="font-playfair text-sm text-[#FDFBF7]/20 min-w-[60px] text-center">
             <span className="text-[#a28468]/60">0{active + 1}</span>
-            <span className="mx-1.5 text-[#FDFBF7]/10">/</span>0
-            {testimonials.length}
+            <span className="mx-1.5 text-[#FDFBF7]/10">/</span>0{items.length}
           </span>
 
           <button
-            onClick={() => setActive((active + 1) % testimonials.length)}
+            onClick={() => setActive((active + 1) % items.length)}
             className="w-11 h-11 md:w-10 md:h-10 rounded-full border border-[#FDFBF7]/[0.08] flex items-center justify-center text-[#FDFBF7]/20 hover:border-[#a28468]/30 hover:text-[#a28468]/60 transition-all duration-300 active:scale-90"
             aria-label="Następna"
           >

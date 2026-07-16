@@ -2,9 +2,13 @@
 
 import { useState } from "react";
 
-export default function About() {
+export default function About({ data }: any) {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+
+  if (!data) return null;
+
+  const videoUrl = data.aboutVideoUrl?.node?.mediaItemUrl || "/gypsy.mp4";
 
   return (
     <section className="relative py-16 md:py-32 px-6 md:px-12 bg-[#FDFBF7] overflow-hidden">
@@ -19,7 +23,7 @@ export default function About() {
               poster="/about.jpg"
               className="w-full h-full object-cover object-center"
             >
-              <source src="/gypsy.mp4" type="video/mp4" />
+              <source src={videoUrl} type="video/mp4" />
               Twoja przeglądarka nie obsługuje tagu wideo.
             </video>
 
@@ -30,7 +34,6 @@ export default function About() {
                 onClick={() => setHasInteracted(true)}
                 className="absolute inset-0 z-20 bg-[#1b3745]/50 backdrop-blur-[3px] rounded-2xl flex flex-col items-center justify-center cursor-pointer group transition-all duration-300"
               >
-                {/* Ikona Play */}
                 <div className="w-20 h-20 rounded-full border-2 border-[#a28468] flex items-center justify-center mb-5 group-hover:bg-[#a28468]/20 transition-colors duration-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -90,49 +93,34 @@ export default function About() {
 
         <div>
           <p className="text-[#a28846] text-[10px] tracking-[0.4em] uppercase mb-5 font-medium">
-            Kim jestem?
+            {data.kimJestem}
           </p>
 
           <h2 className="font-playfair text-4xl md:text-6xl text-[#1b3745] leading-[1.1] mb-8">
-            Pasjonat, nie tylko{" "}
-            <span className="text-[#a28468]/60 italic font-light">barman.</span>
+            {data.aboutTitle}
           </h2>
 
           <div className="w-10 h-[2px] bg-[#a28468]/30 mb-8"></div>
 
-          <div className="space-y-5 text-[#1b3745]/50 text-sm leading-relaxed">
-            <p>
-              Cześć, jestem Gypsy (założyciel Gypsy&apos;s). Moją misją jest
-              udowodnić, że barman to nie tylko osoba, która nalewa alkohol – to
-              osoba, która tworzy atmosferę i dba o każdy, nawet najmniejszy
-              detal Twojej imprezy.
-            </p>
-            <p className="text-[#1b3745]/20 text-[10px] tracking-widest uppercase mt-2">
-              Zrezygnowałem z pracy w korporacjach, żeby robić to, co naprawdę
-              kocham. Przez ostatnie lata obsłużyłem setki wydarzeń, od
-              kameralnych spotkań po wesela na 300 osób, ciągle szukając nowych
-              smaków i inspiracji.
-            </p>
-          </div>
+          <div
+            className="space-y-5 text-[#1b3745]/50 text-sm leading-relaxed [&_p]:mb-4"
+            dangerouslySetInnerHTML={{ __html: data.aboutContent }}
+          />
 
-          <div className="flex gap-10 mt-12 pt-10 border-t border-[#1b3745]/10">
-            <div>
-              <span className="font-playfair text-4xl text-[#a28468] leading-none">
-                10+
-              </span>
-              <p className="text-[#1b3745]/30 text-[10px] tracking-widest uppercase mt-1">
-                Lat doświadczenia
-              </p>
+          {data.aboutStats && data.aboutStats.length > 0 && (
+            <div className="flex gap-10 mt-12 pt-10 border-t border-[#1b3745]/10">
+              {data.aboutStats.map((stat: any, i: any) => (
+                <div key={i}>
+                  <span className="font-playfair text-4xl text-[#a28468] leading-none">
+                    {stat.value}
+                  </span>
+                  <p className="text-[#1b3745]/30 text-[10px] tracking-widest uppercase mt-1">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
             </div>
-            <div>
-              <span className="font-playfair text-4xl text-[#a28468] leading-none">
-                100%
-              </span>
-              <p className="text-[#1b3745]/30 text-[10px] tracking-widest uppercase mt-1">
-                Własnych receptur
-              </p>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

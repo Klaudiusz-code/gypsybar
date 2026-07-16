@@ -9,17 +9,20 @@ import {
   FaFacebook,
 } from "react-icons/fa";
 
-export default function Contact() {
+export default function Contact({ data }: any) {
   const [isFormSent, setIsFormSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  if (!data) return null;
+
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     setIsFormSent(true);
     setTimeout(() => setIsFormSent(false), 3000);
   };
 
-  // Pobiera dzisiejszą datę w formacie YYYY-MM-DD, żeby zablokować wybór przeszłości
   const today = new Date().toISOString().split("T")[0];
+
+  const avatarUrl = data.contactImageUrl?.node?.sourceUrl || "/avatar.jpg";
 
   return (
     <section
@@ -31,15 +34,16 @@ export default function Contact() {
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 md:gap-24 items-start relative z-10">
         <div>
           <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-5 font-medium">
-            Kontakt
+            {data.contactLabel}
           </p>
           <h2 className="font-playfair text-3xl md:text-5xl text-[#FDFBF7] leading-tight mb-4">
-            Sprawdź dostępność <br />
-            <span className="text-[#a28468]/50 italic font-light">terminu</span>
+            {data.contactTitle.split(" ").slice(0, 3).join(" ")} <br />
+            <span className="text-[#a28468]/50 italic font-light">
+              {data.contactTitle.split(" ").slice(3).join(" ")}
+            </span>
           </h2>
           <p className="text-[#FDFBF7]/20 text-sm leading-relaxed mb-12 max-w-sm">
-            Wypełnij formularz, a ja wrócę do Ciebie z indywidualną wyceną w
-            ciągu kilku godzin.
+            {data.contactDescription}
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-8">
@@ -55,26 +59,23 @@ export default function Contact() {
                 htmlFor="name"
                 className="absolute left-0 top-0 text-sm text-[#FDFBF7]/20 transition-all peer-placeholder-shown:top-0 peer-placeholder-shown:text-base peer-focus:-top-5 peer-focus:text-[10px] peer-focus:text-[#a28468] peer-focus:tracking-widest peer-focus:uppercase peer-[:not(:placeholder-shown)]:-top-5 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:text-[#FDFBF7]/40"
               >
-                Imię i nazwisko
+                {data.formNameLabel}
               </label>
             </div>
 
-            {/* INPUT DATY - Zmieniony na type="date" z ciemnym schematem */}
             <div className="relative border-b border-[#FDFBF7]/10 focus-within:border-[#a28468] transition-colors pb-3">
               <input
                 type="date"
                 id="date"
-                min={today} // Blokuje daty z przeszłości
+                min={today}
                 required
-                // [color-scheme:dark] to magiczny atrybut w Tailwind, który sprawia, że wyskakujący kalendarz jest ciemny!
                 className="w-full bg-transparent text-[#FDFBF7] focus:outline-none text-sm [color-scheme:dark]"
               />
               <label
                 htmlFor="date"
-                // Dla daty etykieta jest zawsze "zawinięta" do góry, bo input date nie używa placeholdera
                 className="absolute left-0 -top-5 text-[10px] text-[#FDFBF7]/40 tracking-widest uppercase"
               >
-                Data imprezy
+                {data.formDateLabel}
               </label>
             </div>
 
@@ -89,7 +90,7 @@ export default function Contact() {
                 htmlFor="msg"
                 className="absolute left-0 top-0 text-sm text-[#FDFBF7]/20 transition-all peer-placeholder-shown:top-0 peer-placeholder-shown:text-base peer-focus:-top-5 peer-focus:text-[10px] peer-focus:text-[#a28468] peer-focus:tracking-widest peer-focus:uppercase peer-[:not(:placeholder-shown)]:-top-5 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:text-[#FDFBF7]/40"
               >
-                Krótko o imprezie...
+                {data.formMessageLabel}
               </label>
             </div>
 
@@ -103,7 +104,7 @@ export default function Contact() {
             >
               {isFormSent
                 ? "Wysłano! Odezwiemy się wkrótce."
-                : "Wyślij zapytanie"}
+                : data.formButtonText}
             </button>
           </form>
         </div>
@@ -111,7 +112,7 @@ export default function Contact() {
         <div className="flex flex-col items-center md:items-end pt-8 md:pt-0">
           <div className="relative w-full max-w-xs md:max-w-sm aspect-[3/4] rounded-2xl overflow-hidden border-2 border-[#a28468]/20 mb-10 group shadow-2xl shadow-black/50">
             <Image
-              src="/avatar.jpg"
+              src={avatarUrl}
               alt="Twórca Gypsy's Bar"
               fill
               className="object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
@@ -122,15 +123,12 @@ export default function Contact() {
               <p className="font-playfair text-2xl text-[#FDFBF7]">
                 Gypsy&apos;s
               </p>
-              <p className="text-[#FDFBF7]/30 text-xs tracking-[0.2em] uppercase mt-1">
-                Prywatny Barman
-              </p>
             </div>
           </div>
 
           <div className="w-full max-w-xs md:max-w-sm space-y-3">
             <a
-              href="https://wa.me/48661214648"
+              href={data.contactWhatsapp}
               target="_blank"
               className="flex items-center gap-4 group p-4 rounded-xl border border-[#FDFBF7]/5 bg-[#FDFBF7]/[0.02] hover:border-[#a28468]/20 hover:bg-[#a28468]/[0.05] transition-all duration-300"
             >
@@ -140,13 +138,13 @@ export default function Contact() {
                   Napisz (najszybciej)
                 </p>
                 <p className="text-[#FDFBF7]/60 group-hover:text-[#a28468] transition-colors text-sm mt-0.5">
-                  +48 661 214 648
+                  {data.contactPhone}
                 </p>
               </div>
             </a>
 
             <a
-              href="mailto:gypsysmobilebar@gmail.com"
+              href={`mailto:${data.contactEmail}`}
               className="flex items-center gap-4 group p-4 rounded-xl border border-[#FDFBF7]/5 bg-[#FDFBF7]/[0.02] hover:border-[#a28468]/20 hover:bg-[#a28468]/[0.05] transition-all duration-300"
             >
               <FaEnvelope className="text-[#a28468] text-lg" />
@@ -155,7 +153,7 @@ export default function Contact() {
                   E-mail
                 </p>
                 <p className="text-[#FDFBF7]/60 group-hover:text-[#a28468] transition-colors text-sm mt-0.5 break-all">
-                  gypsysmobilebar@gmail.com
+                  {data.contactEmail}
                 </p>
               </div>
             </a>
