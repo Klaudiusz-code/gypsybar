@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
@@ -278,10 +279,10 @@ export default async function EnHomePage() {
     headers: {
       "Content-Type": "application/json",
     },
-
     body: JSON.stringify({
       query: QUERY_HOME_EN,
     }),
+    cache: "no-store",
   });
 
   const { data, errors } = await response.json();

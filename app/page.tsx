@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
@@ -45,8 +46,7 @@ export async function generateMetadata() {
     seo?.description ||
     "Profesjonalny mobilny koktajlbar na wesela, eventy firmowe i prywatne przyjęcia. Autorskie koktajle, miksologia i obsługa premium.";
 
-  const image =
-    "/hero.jpg"
+  const image = "/hero.jpg";
   return {
     title,
     description,
@@ -516,14 +516,13 @@ query HomePage {
 export default async function PlHomePage() {
   const response = await fetch("https://cms.gypsysbar.pl/graphql", {
     method: "POST",
-
     headers: {
       "Content-Type": "application/json",
     },
-
     body: JSON.stringify({
       query: QUERY_HOME_PL,
     }),
+    cache: "no-store",
   });
 
   if (!response.ok) {
