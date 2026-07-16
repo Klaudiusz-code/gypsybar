@@ -36,11 +36,17 @@ export default function Contact({ data }: any) {
           <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-5 font-medium">
             {data.contactLabel}
           </p>
-          <h2 className="font-playfair text-3xl md:text-5xl text-[#FDFBF7] leading-tight mb-4">
-            {data.contactTitle.split(" ").slice(0, 3).join(" ")} <br />
-            <span className="text-[#a28468]/50 italic font-light">
-              {data.contactTitle.split(" ").slice(3).join(" ")}
-            </span>
+          <h2 className="font-playfair text-3xl md:text-5xl text-[#fff] leading-tight">
+            {data.contactTitle
+              ?.split(" ")
+              .map((word: string, index: number, array: string[]) => (
+                <span
+                  key={index}
+                  className={index === array.length - 1 ? "text-[#a28468]" : ""}
+                >
+                  {word}{" "}
+                </span>
+              ))}
           </h2>
           <p className="text-[#FDFBF7]/20 text-sm leading-relaxed mb-12 max-w-sm">
             {data.contactDescription}

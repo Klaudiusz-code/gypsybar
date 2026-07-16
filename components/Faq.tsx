@@ -16,7 +16,16 @@ export default function Faq({ data }: any) {
             {data.faqLabel}
           </p>
           <h2 className="font-playfair text-3xl md:text-5xl text-[#1b3745] leading-tight">
-           {data.faqTitle}
+            {data.faqTitle
+              ?.split(" ")
+              .map((word: string, index: number, array: string[]) => (
+                <span
+                  key={index}
+                  className={index === array.length - 1 ? "text-[#a28468]" : ""}
+                >
+                  {word}{" "}
+                </span>
+              ))}
           </h2>
         </div>
 

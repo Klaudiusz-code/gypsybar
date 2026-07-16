@@ -15,7 +15,6 @@ const navTranslations = {
     { href: "#pakiety", label: "Pakiety" },
     { href: "#kontakt", label: "Kontakt" },
   ],
-
   en: [
     { href: "#oferta", label: "Services" },
     { href: "#realizacje", label: "Portfolio" },
@@ -32,7 +31,6 @@ export default function Nav() {
 
   const pathname = usePathname();
 
-  // Automatyczne wykrywanie języka
   const lang = pathname.startsWith("/en") ? "en" : "pl";
 
   const navLinks = navTranslations[lang];
@@ -59,21 +57,21 @@ export default function Nav() {
         }`}
       >
         <div className="max-w-[1400px] mx-auto w-full px-6 lg:px-16 h-20 flex items-center justify-between">
-          {/* LOGO */}
+   
           <a
             href={lang === "en" ? "/en" : "/"}
-            className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-[#a28468]/60 hover:border-[#a28468] transition-all duration-500"
+            onClick={() => setIsOpen(false)}
+            className=" hover:opacity-100 transition-opacity"
           >
             <Image
-              src="/logo-gryp.jpg"
-              alt="Gypsy Bar Logo"
-              fill
-              className="object-cover mix-blend-luminosity"
-              priority
+              src="/logos-g.svg"
+              alt="Logo"
+              width={70}
+              height={36} 
+              className="object-contain"
             />
           </a>
 
-          {/* DESKTOP MENU */}
           <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link, i) => (
               <div key={link.href} className="flex items-center gap-1">
@@ -82,10 +80,8 @@ export default function Nav() {
                   className="group relative text-[11px] tracking-[0.25em] uppercase text-white/50 hover:text-white px-4 py-2 transition-colors duration-500"
                 >
                   {link.label}
-
                   <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-px bg-[#a28468] transition-all duration-500 group-hover:w-2/3" />
                 </a>
-
                 {i < navLinks.length - 1 && (
                   <span className="w-px h-4 bg-white/10" />
                 )}
@@ -93,9 +89,7 @@ export default function Nav() {
             ))}
           </div>
 
-          {/* PRAWA STRONA */}
           <div className="hidden lg:flex items-center gap-4">
-            {/* LANGUAGE */}
             <div className="flex items-center bg-white/5 p-1 rounded-full border border-white/10">
               <a
                 href="/"
@@ -107,7 +101,6 @@ export default function Nav() {
               >
                 🇵🇱
               </a>
-
               <a
                 href="/en"
                 className={`px-2.5 py-1 rounded-full text-sm transition-all ${
@@ -120,7 +113,6 @@ export default function Nav() {
               </a>
             </div>
 
-            {/* SOCIAL */}
             <div className="flex items-center gap-2">
               <a
                 href="#"
@@ -129,7 +121,6 @@ export default function Nav() {
               >
                 <FaInstagram size={13} />
               </a>
-
               <a
                 href="#"
                 target="_blank"
@@ -141,7 +132,6 @@ export default function Nav() {
 
             <span className="w-px h-5 bg-white/10" />
 
-            {/* CTA */}
             <a
               href="#kontakt"
               className="flex items-center gap-3 bg-[#a28468] text-[#1b3745] px-6 py-2.5 rounded-sm text-[11px] font-bold tracking-[0.15em] uppercase hover:bg-[#c4a882] transition-all"
@@ -150,14 +140,10 @@ export default function Nav() {
                 <span className="animate-ping absolute h-full w-full rounded-full bg-[#1b3745]/30" />
                 <span className="relative rounded-full h-2 w-2 bg-[#1b3745]/60" />
               </span>
-
               {lang === "en" ? "Get a quote" : "Wycena"}
-
               <FaCocktail />
             </a>
           </div>
-
-          {/* MOBILE BUTTON */}
 
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -167,8 +153,6 @@ export default function Nav() {
           </button>
         </div>
       </nav>
-
-      {/* MOBILE MENU */}
 
       <div
         className={`fixed inset-0 bg-[#1b3745] z-[60] flex flex-col transition-all duration-700 lg:hidden ${
@@ -181,13 +165,14 @@ export default function Nav() {
           <a
             href={lang === "en" ? "/en" : "/"}
             onClick={() => setIsOpen(false)}
-            className="relative w-10 h-10 rounded-full overflow-hidden border border-[#a28468]/30"
+            className="opacity-80 hover:opacity-100 transition-opacity"
           >
             <Image
-              src="/logo-gryp.jpg"
+              src="/logos-g.svg"
               alt="Logo"
-              fill
-              className="object-cover"
+              width={100} 
+              height={35}
+              className="object-contain"
             />
           </a>
 
@@ -195,7 +180,6 @@ export default function Nav() {
             <a href="/" className="px-2 py-1 text-xs">
               🇵🇱
             </a>
-
             <a href="/en" className="px-2 py-1 text-xs">
               🇬🇧
             </a>
@@ -225,14 +209,12 @@ export default function Nav() {
               ? "Available for season 2026/2027"
               : "Dostępny na sezon 2026/2027"}
           </span>
-
           <a
             href="#kontakt"
             onClick={() => setIsOpen(false)}
             className="flex items-center justify-center gap-2 bg-[#a28468] text-[#1b3745] py-3.5 uppercase text-[11px] font-bold"
           >
             <FaCocktail />
-
             {lang === "en" ? "Check availability" : "Zapytaj o termin"}
           </a>
         </div>

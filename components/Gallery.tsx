@@ -1,6 +1,9 @@
 export default function Gallery({ data }: any) {
   if (!data || !data.galleryItems?.nodes) return null;
 
+  const titleWords = data.galleryTitle?.trim().split(/\s+/) || [];
+  const lastTitleWord = titleWords.pop();
+
   return (
     <section
       id="realizacje"
@@ -12,7 +15,8 @@ export default function Gallery({ data }: any) {
             {data.galleryLabel}
           </p>
           <h2 className="font-playfair text-3xl md:text-6xl text-[#1b3745] leading-[1.1]">
-            {data.galleryTitle}
+            {titleWords.join(" ")}{" "}
+            <span className="text-[#a28468]">{lastTitleWord}</span>
           </h2>
         </div>
 

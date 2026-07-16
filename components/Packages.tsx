@@ -92,7 +92,16 @@ export default function Packages({ data }: PackagesProps) {
             {data.malyNaglowek}
           </p>
           <h2 className="font-playfair text-4xl md:text-6xl text-[#FDFBF7] leading-tight">
-            {data.tytulPakietow}
+            {data.tytulPakietow
+              ?.split(" ")
+              .map((word: string, index: number, array: string[]) => (
+                <span
+                  key={index}
+                  className={index === array.length - 1 ? "text-[#a28468]" : ""}
+                >
+                  {word}{" "}
+                </span>
+              ))}
           </h2>
         </div>
 

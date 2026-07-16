@@ -9,6 +9,7 @@ import Packages from "@/components/Packages";
 import Faq from "@/components/Faq";
 import Contact from "@/components/Contact";
 import Experience from "@/components/Experience";
+import SocialSection from "@/components/Social";
 
 export async function generateMetadata() {
   return {
@@ -269,6 +270,31 @@ query HomePageEN {
       formMessageLabel
       formButtonText
     }
+          sekcjaSocialMedia {
+
+      socialLabel
+      socialTitle
+      socialDescription
+
+      instagram {
+        nazwaProfiluInstagra
+        nazwaUzytkownika
+        link
+      }
+
+      tiktokitems {
+        nazwaUzytkownikaTiktok
+        nazwaTiktoka
+        linkDoProfiliuTiktok
+      }
+
+      facebook {
+        nazwaFacebooka
+        nazwaUzytkownikaFacebooka
+        linkDoProfiluFacebooka
+      }
+
+    }
   }
 }
 `;
@@ -316,6 +342,7 @@ export default async function EnHomePage() {
       <Faq data={page.sekcjaFaq} />
 
       <Contact data={page.sekcjaKontakt} />
+      <SocialSection data={page.sekcjaSocialMedia} />
     </main>
   );
 }

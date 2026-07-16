@@ -4,6 +4,8 @@ import { FaCocktail } from "react-icons/fa";
 
 export default function Hero({ data }: any) {
   if (!data) return null;
+  const words = data.heroTitle?.trim().split(/\s+/) || [];
+  const lastWord = words.pop();
 
   return (
     <section className="relative w-full h-[100vh] md:h-[85vh] md:min-h-[600px] overflow-hidden bg-[#1b3745]">
@@ -54,7 +56,7 @@ export default function Hero({ data }: any) {
 
           {/* Nagłówek */}
           <h1 className="font-playfair text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl text-white font-bold leading-[1.05] mb-6 md:mb-8 whitespace-pre-line">
-            {data.heroTitle}
+            {words.join(" ")} <span className="text-[#a28468]">{lastWord}</span>
           </h1>
 
           {/* Podtytuł - lekko oddzielony */}
