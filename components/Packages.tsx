@@ -105,7 +105,6 @@ export default function Packages({ data }: PackagesProps) {
           </h2>
         </div>
 
-        {/* BASIC PACKAGE */}
         <div className="bg-[#0e1c22] border border-white/[0.05] p-8 md:p-12 rounded-sm mb-8 shadow-2xl shadow-black/30">
           <div className="mb-12 border-b border-white/[0.05] pb-8">
             <h3 className="font-playfair text-4xl md:text-5xl text-[#FDFBF7]/90 tracking-tight">
@@ -117,7 +116,6 @@ export default function Packages({ data }: PackagesProps) {
           </div>
 
           <div className="grid md:grid-cols-3 gap-10 md:gap-16">
-            {/* FEATURES */}
             <div>
               <p className="text-[#a28468] text-[10px] tracking-[0.2em] uppercase font-bold mb-6">
                 {data.pakietBasic.tytulWCenieZawarte}
@@ -137,7 +135,6 @@ export default function Packages({ data }: PackagesProps) {
               </ul>
             </div>
 
-            {/* DRINK MENU */}
             <div>
               <p className="text-[#a28468] text-[10px] tracking-[0.2em] uppercase font-bold mb-6">
                 {data.pakietBasic.tytulWybrorKoktajli}
@@ -158,7 +155,6 @@ export default function Packages({ data }: PackagesProps) {
               </div>
             </div>
 
-            {/* CTA */}
             <div className="flex flex-col justify-between">
               <div>
                 <p className="text-[#a28468] text-[10px] tracking-[0.2em] uppercase font-bold mb-4">
@@ -173,7 +169,6 @@ export default function Packages({ data }: PackagesProps) {
           </div>
         </div>
 
-        {/* FUNDAMENTAL PACKAGE */}
         <div className="relative bg-[#0e1c22] rounded-sm mb-24 overflow-hidden shadow-2xl shadow-[#a28468]/[0.07] border border-[#a28468]/20 shadow-[inset_0_1px_0_0_rgba(162,132,104,0.2)]">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#a28468]/[0.08] rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[600px] h-[200px] bg-[#a28468]/[0.04] rounded-full blur-3xl pointer-events-none"></div>

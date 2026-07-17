@@ -10,6 +10,7 @@ import Faq from "@/components/Faq";
 import Contact from "@/components/Contact";
 import Experience from "@/components/Experience";
 import SocialSection from "@/components/Social";
+import Footer from "@/components/Footer";
 
 export async function generateMetadata() {
   return {
@@ -343,6 +344,7 @@ export default async function EnHomePage() {
 
       <Contact data={page.sekcjaKontakt} />
       <SocialSection data={page.sekcjaSocialMedia} />
+      <Footer />
     </main>
   );
 }

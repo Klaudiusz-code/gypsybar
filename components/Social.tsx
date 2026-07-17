@@ -29,6 +29,9 @@ interface SocialSectionProps {
 }
 
 export default function SocialSection({ data }: SocialSectionProps) {
+   if (!data) return null;
+  const words = data.socialTitle?.trim().split(/\s+/) || [];
+  const lastWord = words.pop();
   const socials = [
     {
       name: data.instagram.nazwaProfiluInstagra,
@@ -71,8 +74,8 @@ export default function SocialSection({ data }: SocialSectionProps) {
             {data.socialLabel}
           </p>
 
-          <h2 className="font-playfair text-3xl md:text-6xl text-[#FDFBF7] leading-[1.1]">
-            {data.socialTitle}
+           <h2 className="font-playfair text-4xl sm:text-5xl md:text-5xl lg:text-6xl  text-white font-bold leading-[1.05] mb-6 md:mb-8 whitespace-pre-line">
+            {words.join(" ")} <span className="text-[#a28468]">{lastWord}</span>
           </h2>
 
           <p className="text-[#FDFBF7]/15 text-sm mt-6 max-w-md mx-auto leading-relaxed">

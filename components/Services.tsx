@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 export default function Services({ data }: any) {
-  const [activeIndex, setActiveIndex] = useState<number>(-1); // Domyślnie wszystko zamknięte
+  const [activeIndex, setActiveIndex] = useState<number>(-1);
 
   if (!data || !data.servicesItems) return null;
 
@@ -14,8 +14,17 @@ export default function Services({ data }: any) {
         <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-5 font-medium">
           {data.servicesLabel}
         </p>
-        <h2 className="font-playfair text-3xl sm:text-4xl md:text-6xl text-[#FDFBF7] leading-[1.1] mb-6">
-          {data.servicesTitle}
+        <h2 className="font-playfair text-3xl md:text-5xl text-[#fff] leading-tight">
+          {data.servicesTitle
+            ?.split(" ")
+            .map((word: string, index: number, array: string[]) => (
+              <span
+                key={index}
+                className={index === array.length - 1 ? "text-[#a28468]" : ""}
+              >
+                {word}{" "}
+              </span>
+            ))}
         </h2>
         <p className="text-[#FDFBF7]/20 text-sm leading-relaxed max-w-md mx-auto">
           {data.servicesDescription}
@@ -27,7 +36,6 @@ export default function Services({ data }: any) {
           const isActive = activeIndex === i;
           const hasImage = item.imageUrl;
 
-          // Klasy dla obrazka (Tylko Desktop)
           const imgClasses = `object-cover transition-all duration-1000 hidden md:block ${
             isActive
               ? "opacity-30 scale-100 md:opacity-40"
@@ -48,7 +56,6 @@ export default function Services({ data }: any) {
                 ${!hasImage ? "" : ""}
               `}
             >
-              {/* Obrazek tła (TYLKO DESKTOP) */}
               {hasImage && (
                 <Image
                   src={item.imageUrl}
@@ -58,7 +65,6 @@ export default function Services({ data }: any) {
                 />
               )}
 
-              {/* Overlay dla desktopa */}
               <div
                 className={`hidden md:block absolute inset-0 transition-colors duration-500 ${!hasImage ? "bg-[#131f27]" : isActive ? "bg-black/20" : "bg-[#131f27] group-hover:bg-[#1a2b35]"}`}
               />
@@ -66,13 +72,8 @@ export default function Services({ data }: any) {
                 className={`hidden md:block absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-500 ${isActive ? "opacity-100" : "opacity-0"}`}
               />
 
-              {/* ========================================== */}
-              {/* WERSJA MOBILNA (Pionowa, czytelna ośka) */}
-              {/* ========================================== */}
               <div className="md:hidden relative z-10">
-                {/* Główny wiersz: Zdjęcie miniatura + Tytuł + Numer + Strzałka */}
                 <div className="flex items-center gap-4 p-5 pb-4">
-                  {/* Miniaturka zdjęcia */}
                   {hasImage && (
                     <div className="w-12 h-12 flex-shrink-0 rounded-lg overflow-hidden border border-[#1e3946]">
                       <img
@@ -83,12 +84,10 @@ export default function Services({ data }: any) {
                     </div>
                   )}
 
-                  {/* Tytuł */}
                   <h3 className="font-playfair text-lg sm:text-xl text-[#FDFBF7] tracking-tight flex-1 min-w-0 leading-tight">
                     {item.title}
                   </h3>
 
-                  {/* Numer + Ikona rozwijania */}
                   <div className="flex items-center gap-3 flex-shrink-0">
                     <span className="font-playfair text-lg text-[#a28468]/30 font-light">
                       0{i + 1}
@@ -103,7 +102,6 @@ export default function Services({ data }: any) {
                   </div>
                 </div>
 
-                {/* Rozwijany opis (Akordeon) */}
                 <div
                   className={`overflow-hidden transition-all duration-500 ease-out ${
                     isActive ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
@@ -111,7 +109,6 @@ export default function Services({ data }: any) {
                 >
                   <div className="px-5 pb-5 pl-[76px] sm:pl-[80px]">
                     {" "}
-                    {/* Wyrównanie z tytułem (12px miniatura + 16px gap + 48px padding) */}
                     <div className="w-8 h-px bg-[#a28468]/20 mb-3" />
                     <p className="text-sm leading-relaxed text-[#FDFBF7]/40">
                       {item.description}
@@ -120,9 +117,6 @@ export default function Services({ data }: any) {
                 </div>
               </div>
 
-              {/* ========================================== */}
-              {/* WERSJA DESKTOPOWA (Oryginalny Accordion) */}
-              {/* ========================================== */}
               <div
                 className="hidden md:flex relative z-10 h-full flex-col items-center p-8 pt-10 transition-all duration-700"
                 style={{ justifyContent: isActive ? "flex-end" : "center" }}

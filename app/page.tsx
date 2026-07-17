@@ -324,19 +324,12 @@ query HomePage {
           benefit
         }
 
-
-
         pricingNote
-
-
-
         cechyPakietu {
 
           cecha
           opis
         }
-
-
 
         liczbaGosci {
 
@@ -345,14 +338,7 @@ query HomePage {
 
       }
 
-
-
-
-
       naglowekDodatkow
-
-
-
       listaDodatkow {
 
         nazwaDodatku
@@ -360,12 +346,6 @@ query HomePage {
       }
 
     }
-
-
-
-
-
-
 
     sekcjaDoswiadczenie {
 
@@ -393,17 +373,9 @@ query HomePage {
       }
 
 
-
       cytat
 
     }
-
-
-
-
-
-
-
 
     sekcjaFaq {
 
@@ -419,12 +391,6 @@ query HomePage {
         answer
       }
     }
-
-
-
-
-
-
 
     sekcjaKontakt {
 
