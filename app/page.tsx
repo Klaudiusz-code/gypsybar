@@ -97,12 +97,41 @@ export async function generateMetadata() {
     },
   };
 }
+const QUERY_GLOBAL_SETTINGS = `
+query GlobalSettings {
 
+  globalneUstawienia {
+    globalSettingsV2 {
+
+      email
+      kontakt
+      nazwaFirmy
+      whatsapp
+
+      logo {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+
+      socialMedia {
+        tiktok
+        instagramUrl
+        facebook
+      }
+
+    }
+  }
+
+}
+`;
 const QUERY_HOME_PL = `
 query HomePage {
 
   page(id: "strona-glowna", idType: URI) {
     title
+    
     sekcjaHero {
 
       heroTitle
@@ -185,7 +214,11 @@ query HomePage {
       galleryLabel
       galleryTitle
 
-
+      filmZPracy{
+        node{
+          sourceUrl
+        }
+      }
       galleryItems {
 
         nodes {
@@ -231,7 +264,7 @@ query HomePage {
         drinkDescription
       }
 
-
+      kartaDopasowanaDoWas
       menuImage {
 
         nodes {
@@ -331,19 +364,11 @@ query HomePage {
           opis
         }
 
-        liczbaGosci {
-
-          liczba
-        }
 
       }
 
-      naglowekDodatkow
-      listaDodatkow {
-
-        nazwaDodatku
-        description
-      }
+      
+   
 
     }
 
@@ -411,8 +436,6 @@ query HomePage {
 
       }
 
-
-
       contactPhone
       contactWhatsapp
       contactEmail
@@ -427,11 +450,6 @@ query HomePage {
     }
 
 
-
-
-
-
-
     sekcjaSocialMedia {
 
 
@@ -439,59 +457,38 @@ query HomePage {
       socialTitle
       socialDescription
 
-
-
-      instagram {
-
-        nazwaProfiluInstagra
-        nazwaUzytkownika
-        link
-
-      }
-
-
-
-      tiktokitems {
-
-        nazwaUzytkownikaTiktok
-        nazwaTiktoka
-        linkDoProfiliuTiktok
-
-      }
-
-
-
-
-
-      facebook {
-
-        nazwaFacebooka
-        nazwaUzytkownikaFacebooka
-        linkDoProfiluFacebooka
-
-      }
-
     }
-
-
   }
 
 }
 `;
 
 export default async function PlHomePage() {
-  const response = await fetch("https://cms.gypsysbar.pl/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: QUERY_HOME_PL,
+  const [pageResponse, settingsResponse] = await Promise.all([
+    fetch("https://cms.gypsysbar.pl/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: QUERY_HOME_PL,
+      }),
+      cache: "no-store",
     }),
-    cache: "no-store",
-  });
 
-  if (!response.ok) {
+    fetch("https://cms.gypsysbar.pl/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: QUERY_GLOBAL_SETTINGS,
+      }),
+      cache: "no-store",
+    }),
+  ]);
+
+  if (!pageResponse.ok || !settingsResponse.ok) {
     return (
       <main className="min-h-screen flex items-center justify-center text-white bg-[#0a1218]">
         Błąd ładowania strony...
@@ -499,13 +496,15 @@ export default async function PlHomePage() {
     );
   }
 
-  const { data, errors } = await response.json();
+  const { data, errors } = await pageResponse.json();
+
+  const { data: settingsData } = await settingsResponse.json();
 
   if (errors || !data?.page) {
     console.error("Błąd GraphQL:", errors);
 
     return (
-      <main className="min-h-screen flex items-center justify-center text-white bg-[#0a1218">
+      <main className="min-h-screen flex items-center justify-center text-white bg-[#0a1218]">
         Błąd danych strony...
       </main>
     );
@@ -513,9 +512,11 @@ export default async function PlHomePage() {
 
   const page = data.page;
 
+  const settings = settingsData?.globalneUstawienia?.globalSettingsV2;
+
   return (
     <main className="overflow-x-hidden">
-      <Nav />
+      <Nav settings={settings} />
 
       <Hero data={page.sekcjaHero} />
 
@@ -527,20 +528,20 @@ export default async function PlHomePage() {
 
       <Services data={page.sekcjaOferta} />
 
-      <Gallery data={page.sekcjaGaleria} />
+      <Gallery data={page.sekcjaGaleria} settings={settings} />
 
       <Testimonials data={page.sekcjaOpinie} />
 
       <Menu data={page.sekcjaMenu} />
 
-      <Packages data={page.sekcjaPakiety} />
+      <Packages data={page.sekcjaPakiety} settings={settings} />
 
       <Faq data={page.sekcjaFaq} />
 
-      <Contact data={page.sekcjaKontakt} />
+      <Contact data={page.sekcjaKontakt} settings={settings} />
 
-      <SocialSection data={page.sekcjaSocialMedia} />
 
+      <SocialSection settings={settings} />
       <Footer />
     </main>
   );

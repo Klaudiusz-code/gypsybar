@@ -96,7 +96,7 @@ export default function About({ data }: any) {
             {data.kimJestem}
           </p>
 
-          <h2 className="font-playfair text-4xl md:text-6xl text-[#1b3745] leading-[1.1] mb-8">
+          <h2 className="font-playfair text-4xl  text-[#1b3745] leading-[1.1] mb-8">
             {data.aboutTitle}
           </h2>
 

@@ -74,7 +74,35 @@ export async function generateMetadata() {
     },
   };
 }
+const QUERY_GLOBAL_SETTINGS = `
+query GlobalSettings {
 
+  globalneUstawienia {
+    globalSettingsV2 {
+
+      email
+      kontakt
+      nazwaFirmy
+      whatsapp
+
+      logo {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+
+      socialMedia {
+        tiktok
+        instagramUrl
+        facebook
+      }
+
+    }
+  }
+
+}
+`;
 const QUERY_HOME_EN = `
 query HomePageEN {
   page(id: "home", idType: URI) {
@@ -129,7 +157,11 @@ query HomePageEN {
     sekcjaGaleria {
       galleryLabel
       galleryTitle
-
+      filmZPracy{
+        node{
+          sourceUrl
+        }
+      }
       galleryItems {
         nodes {
           sourceUrl
@@ -142,7 +174,7 @@ query HomePageEN {
       menuLabel
       menuTitle
       textAlco
-
+      kartaDopasowanaDoWas
       menuDrinks {
         drinkName
         drinkDescription
@@ -207,17 +239,12 @@ query HomePageEN {
       opis
     }
 
-    liczbaGosci {
-      liczba
-    }
+   
   }
 
-  naglowekDodatkow
+  
 
-  listaDodatkow {
-    nazwaDodatku
-    description
-  }
+
 }
 
 
@@ -277,23 +304,6 @@ query HomePageEN {
       socialTitle
       socialDescription
 
-      instagram {
-        nazwaProfiluInstagra
-        nazwaUzytkownika
-        link
-      }
-
-      tiktokitems {
-        nazwaUzytkownikaTiktok
-        nazwaTiktoka
-        linkDoProfiliuTiktok
-      }
-
-      facebook {
-        nazwaFacebooka
-        nazwaUzytkownikaFacebooka
-        linkDoProfiluFacebooka
-      }
 
     }
   }
@@ -301,49 +311,68 @@ query HomePageEN {
 `;
 
 export default async function EnHomePage() {
-  const response = await fetch("https://cms.gypsysbar.pl/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: QUERY_HOME_EN,
+  const [pageResponse, settingsResponse] = await Promise.all([
+    fetch("https://cms.gypsysbar.pl/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: QUERY_HOME_EN,
+      }),
+      cache: "no-store",
     }),
-    cache: "no-store",
-  });
 
-  const { data, errors } = await response.json();
+    fetch("https://cms.gypsysbar.pl/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: QUERY_GLOBAL_SETTINGS,
+      }),
+      cache: "no-store",
+    }),
+  ]);
 
-  if (errors || !data?.page) {
-    console.error("Błąd GraphQL:", errors);
+  const pageResult = await pageResponse.json();
+  const settingsResult = await settingsResponse.json();
 
-    return (
-      <main className="min-h-screen flex items-center justify-center">
-        Error loading page
-      </main>
-    );
+  console.log("PAGE GRAPHQL:", pageResult);
+  console.log("SETTINGS GRAPHQL:", settingsResult);
+
+  const page = pageResult?.data?.page;
+
+  const settings = settingsResult.data?.globalneUstawienia?.globalSettingsV2;
+
+  if (!page) {
+    return <main>Error loading page</main>;
   }
-
-  const page = data.page;
 
   return (
     <main className="overflow-x-hidden">
-      <Nav />
+      <Nav settings={settings} />
+
       <Hero data={page.sekcjaHero} />
 
       <Stats data={page.sekcjaStatystyki} />
 
       <About data={page.sekcjaOMnie} />
+
       <Experience data={page.sekcjaDoswiadczenie} />
 
-      <Gallery data={page.sekcjaGaleria} />
+      <Gallery data={page.sekcjaGaleria} settings={settings} />
 
       <Menu data={page.sekcjaMenu} />
-      <Packages data={page.sekcjaPakiety} />
+
+      <Packages data={page.sekcjaPakiety} settings={settings} />
+
       <Faq data={page.sekcjaFaq} />
 
-      <Contact data={page.sekcjaKontakt} />
-      <SocialSection data={page.sekcjaSocialMedia} />
+      <Contact data={page.sekcjaKontakt} settings={settings} />
+
+      <SocialSection settings={settings} />
+
       <Footer />
     </main>
   );

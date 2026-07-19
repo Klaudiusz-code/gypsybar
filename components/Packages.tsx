@@ -9,70 +9,75 @@ import {
 
 interface PackagesProps {
   data: any;
+  settings: any;
 }
 
-export default function Packages({ data }: PackagesProps) {
-  const ContactList = ({ variant = "classic" }) => {
-    const cta = data.pakietBasic.cta[0];
+export default function Packages({ data, settings }: PackagesProps) {
+  const ContactList = ({ variant = "classic" }: { variant?: string }) => {
+    const globalContact = settings?.globalSettingsV2 || settings;
+
+    const whatsapp = globalContact?.whatsapp;
+    const email = globalContact?.email;
+    const instagram = globalContact?.socialMedia?.instagramUrl;
 
     return (
-      <div className="border-t border-white/[0.05] pt-6 space-y-0">
+      <div className="space-y-0">
         <a
-          href={cta.whatshapp.linkDoWhatshapa}
+          href={`https://wa.me/${whatsapp}`}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center justify-between py-3.5 border-b border-white/[0.03] group"
+          className="flex items-center justify-between py-4 border-b border-white/[0.05] group transition-all duration-300 hover:pl-1"
         >
-          <div className="flex items-center gap-3">
-            <span className="text-[#25D366]">
+          <div className="flex items-center gap-4">
+            <span className="text-[#25D366] transition-transform duration-300 group-hover:scale-110">
               <FaWhatsapp size={16} />
             </span>
-            <span className="text-[#FDFBF7]/50 text-sm group-hover:text-[#FDFBF7]/80 transition-colors">
+            <span className="text-[#FDFBF7]/50 text-sm group-hover:text-[#FDFBF7]/90 transition-colors duration-300">
               WhatsApp
             </span>
           </div>
-          <span className="text-[#FDFBF7]/20 group-hover:text-[#25D366] group-hover:translate-x-1 transition-all text-xs">
-            <FaArrowRight />
+          <span className="text-[#FDFBF7]/15 group-hover:text-[#25D366] transition-all duration-300 group-hover:translate-x-1">
+            <FaArrowRight size={12} />
           </span>
         </a>
 
         <a
-          href={cta.instagram.linkDoInsta}
+          href={instagram || "#"}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center justify-between py-3.5 border-b border-white/[0.03] group"
+          className="flex items-center justify-between py-4 border-b border-white/[0.05] group transition-all duration-300 hover:pl-1"
         >
-          <div className="flex items-center gap-3">
-            <span className="text-[#E1306C]">
+          <div className="flex items-center gap-4">
+            <span className="text-[#E1306C] transition-transform duration-300 group-hover:scale-110">
               <FaInstagram size={16} />
             </span>
-            <span className="text-[#FDFBF7]/50 text-sm group-hover:text-[#FDFBF7]/80 transition-colors">
+            <span className="text-[#FDFBF7]/50 text-sm group-hover:text-[#FDFBF7]/90 transition-colors duration-300">
               Instagram DM
             </span>
           </div>
-          <span className="text-[#FDFBF7]/20 group-hover:text-[#E1306C] group-hover:translate-x-1 transition-all text-xs">
-            <FaArrowRight />
+          <span className="text-[#FDFBF7]/15 group-hover:text-[#E1306C] transition-all duration-300 group-hover:translate-x-1">
+            <FaArrowRight size={12} />
           </span>
         </a>
 
         <a
-          href={`mailto:${cta.email}?subject=Zapytanie o pakiet ${
+          href={`mailto:${email}?subject=Zapytanie o pakiet ${
             variant === "fundamental"
               ? data.pakietFundamental.nazwaPakietu
               : data.pakietBasic.nazwaPakietu
           }`}
-          className="flex items-center justify-between py-3.5 group"
+          className="flex items-center justify-between py-4 group transition-all duration-300 hover:pl-1"
         >
-          <div className="flex items-center gap-3">
-            <span className="text-[#a28468]/60">
+          <div className="flex items-center gap-4">
+            <span className="text-[#a28468]/50 transition-transform duration-300 group-hover:scale-110">
               <FaEnvelope size={15} />
             </span>
-            <span className="text-[#FDFBF7]/50 text-sm group-hover:text-[#FDFBF7]/80 transition-colors">
+            <span className="text-[#FDFBF7]/50 text-sm group-hover:text-[#FDFBF7]/90 transition-colors duration-300">
               E-mail
             </span>
           </div>
-          <span className="text-[#FDFBF7]/20 group-hover:text-[#a28468]/60 group-hover:translate-x-1 transition-all text-xs">
-            <FaArrowRight />
+          <span className="text-[#FDFBF7]/15 group-hover:text-[#a28468] transition-all duration-300 group-hover:translate-x-1">
+            <FaArrowRight size={12} />
           </span>
         </a>
       </div>
@@ -84,9 +89,7 @@ export default function Packages({ data }: PackagesProps) {
       id="pakiety"
       className="relative pt-32 pb-32 px-5 md:px-12 bg-[#0a1218] overflow-hidden"
     >
-      {/* NAPRAWIONY BŁĄD: Dodano brakujące <div> */}
       <div className="max-w-[1100px] mx-auto relative z-10">
-        {/* HEADER */}
         <div className="text-center mb-20 md:mb-28">
           <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-6 font-medium">
             {data.malyNaglowek}
@@ -110,57 +113,37 @@ export default function Packages({ data }: PackagesProps) {
             <h3 className="font-playfair text-4xl md:text-5xl text-[#FDFBF7]/90 tracking-tight">
               {data.pakietBasic.nazwaPakietu}
             </h3>
-            <p className="text-[#FDFBF7]/30 mt-3 text-sm">
+            <p className="text-[#FDFBF7]/30 mt-3 text-sm max-w-md">
               {data.pakietBasic.podtytul}
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-10 md:gap-16">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
             <div>
-              <p className="text-[#a28468] text-[10px] tracking-[0.2em] uppercase font-bold mb-6">
+              <p className="text-[#a28468] text-[10px] tracking-[0.2em] uppercase font-bold mb-8">
                 {data.pakietBasic.tytulWCenieZawarte}
               </p>
-              <ul className="space-y-4">
+              <ul className="space-y-5">
                 {data.pakietBasic.coZawiera.map((item: any, index: number) => (
                   <li
                     key={index}
                     className="flex items-start gap-4 text-sm text-[#FDFBF7]/40 leading-relaxed"
                   >
-                    <span className="text-[#a28468]/50 mt-[-2px] text-base">
+                    <span className="text-[#a28468]/40 mt-[-2px] text-lg font-light">
                       /
                     </span>
-                    {item.element}
+                    <span>{item.element}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div>
-              <p className="text-[#a28468] text-[10px] tracking-[0.2em] uppercase font-bold mb-6">
-                {data.pakietBasic.tytulWybrorKoktajli}
-              </p>
-              <div className="space-y-5">
-                {data.pakietBasic.menuDrinkow.map(
-                  (item: any, index: number) => (
-                    <div key={index} className="group">
-                      <p className="text-[#FDFBF7]/60 text-xs font-medium tracking-wide border-b border-white/[0.05] pb-2 group-hover:border-[#a28468]/30 transition-colors">
-                        {item.bazaAlkholu}
-                      </p>
-                      <p className="text-[#FDFBF7]/25 text-xs mt-2 leading-relaxed">
-                        {item.drinki}
-                      </p>
-                    </div>
-                  ),
-                )}
-              </div>
-            </div>
-
-            <div className="flex flex-col justify-between">
-              <div>
+            <div className="flex flex-col justify-center md:border-l md:border-white/[0.05] md:pl-12 lg:pl-20">
+              <div className="mb-8">
                 <p className="text-[#a28468] text-[10px] tracking-[0.2em] uppercase font-bold mb-4">
                   {data.pakietBasic.naglowekCta}
                 </p>
-                <p className="text-[#FDFBF7]/25 text-sm leading-relaxed mb-8">
+                <p className="text-[#FDFBF7]/25 text-sm leading-relaxed">
                   {data.pakietBasic.opisCta}
                 </p>
               </div>
@@ -169,7 +152,7 @@ export default function Packages({ data }: PackagesProps) {
           </div>
         </div>
 
-        <div className="relative bg-[#0e1c22] rounded-sm mb-24 overflow-hidden shadow-2xl shadow-[#a28468]/[0.07] border border-[#a28468]/20 shadow-[inset_0_1px_0_0_rgba(162,132,104,0.2)]">
+        <div className="relative bg-[#0e1c22] rounded-sm overflow-hidden shadow-2xl shadow-[#a28468]/[0.07] border border-[#a28468]/20 shadow-[inset_0_1px_0_0_rgba(162,132,104,0.2)]">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#a28468]/[0.08] rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[600px] h-[200px] bg-[#a28468]/[0.04] rounded-full blur-3xl pointer-events-none"></div>
 
@@ -182,23 +165,23 @@ export default function Packages({ data }: PackagesProps) {
                 {data.pakietFundamental.nazwaPakietu}
               </h3>
               <div className="w-16 h-[1px] bg-[#a28468]/30 mx-auto mb-6"></div>
-              <p className="text-[#FDFBF7]/30 text-xs sm:text-sm tracking-[0.2em] uppercase font-light max-w-xl mx-auto leading-relaxed">
+              <p className="text-[#FDFBF7]/30 text-xs sm:text-sm tracking-[0.15em] uppercase font-light max-w-xl mx-auto leading-relaxed">
                 {data.pakietFundamental.podtytul}
               </p>
             </div>
 
+            {/* Opis */}
             <div className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
-              <p className="text-[#FDFBF7]/35 text-sm sm:text-base leading-relaxed font-light">
+              <p className="text-[#FDFBF7]/35 text-sm sm:text-base leading-[1.8] font-light">
                 {data.pakietFundamental.description}
               </p>
             </div>
 
-            {/* CECHY */}
-            <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 mb-16 md:mb-20">
+            <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10 mb-20 md:mb-24">
               {data.pakietFundamental.cechyPakietu.map(
                 (item: any, index: number) => (
                   <div key={index} className="group flex gap-5">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full border border-[#a28468]/20 bg-[#a28468]/[0.05] flex items-center justify-center text-[#a28468]/40 group-hover:border-[#a28468]/50 group-hover:text-[#a28468]/70 transition-all duration-500">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full border border-[#a28468]/20 bg-[#a28468]/[0.05] flex items-center justify-center text-[#a28468]/40 group-hover:border-[#a28468]/50 group-hover:text-[#a28468]/80 group-hover:bg-[#a28468]/10 transition-all duration-500">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -225,57 +208,9 @@ export default function Packages({ data }: PackagesProps) {
               )}
             </div>
 
-            <div className="max-w-2xl mx-auto mb-14 text-center">
-              <div className="inline-flex flex-wrap justify-center items-center gap-x-4 gap-y-2 font-playfair text-[#FDFBF7]/25 text-sm tracking-[0.15em]">
-                {data.pakietFundamental.liczbaGosci.map(
-                  (item: any, index: number) => (
-                    <span key={index}>
-                      {index !== 0 && (
-                        <span className="text-[#a28468]/20 mx-4 hidden sm:inline">
-                          —
-                        </span>
-                      )}
-                      {item.liczba >= 200
-                        ? `Powyżej ${item.liczba} osób`
-                        : `Do ${item.liczba} osób`}
-                    </span>
-                  ),
-                )}
-              </div>
-              <p className="text-[#a28468]/30 text-[10px] tracking-[0.2em] uppercase mt-4 font-medium">
-                {data.pakietFundamental.pricingNote}
-              </p>
-            </div>
-
-            <div className="max-w-sm mx-auto w-full">
+            <div className="max-w-md mx-auto w-full bg-white/[0.02] border border-white/[0.05] rounded-sm p-6 backdrop-blur-sm">
               <ContactList variant="fundamental" />
             </div>
-          </div>
-        </div>
-
-        <div>
-          <div className="flex items-center gap-6 mb-10">
-            <div className="h-px flex-grow bg-white/[0.05]" />
-            <p className="text-[#FDFBF7]/20 text-[10px] uppercase tracking-[0.3em] font-medium">
-              {data.naglowekDodatkow}
-            </p>
-            <div className="h-px flex-grow bg-white/[0.05]" />
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-5">
-            {data.listaDodatkow.map((item: any, index: number) => (
-              <div
-                key={index}
-                className="group bg-[#0e1c22] border border-white/[0.05] p-8 hover:border-[#a28468]/20 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
-              >
-                <h4 className="text-[#FDFBF7]/70 text-base font-playfair mb-4 group-hover:text-[#a28468] transition-colors">
-                  {item.nazwaDodatku}
-                </h4>
-                <p className="text-[#FDFBF7]/20 text-sm leading-relaxed mb-6">
-                  {item.description}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
       </div>

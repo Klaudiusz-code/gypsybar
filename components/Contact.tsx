@@ -9,11 +9,19 @@ import {
   FaFacebook,
 } from "react-icons/fa";
 
-export default function Contact({ data }: any) {
-  const [isFormSent, setIsFormSent] = useState(false);
-
+export default function Contact({ data, settings }: any) {
   if (!data) return null;
 
+  const globalContact = settings?.globalSettingsV2 || settings;
+
+  const whatsapp = globalContact?.whatsapp;
+  const email = globalContact?.email;
+
+  const instagram = globalContact?.socialMedia?.instagramUrl;
+
+  const facebook = globalContact?.socialMedia?.facebook;
+
+  const [isFormSent, setIsFormSent] = useState(false);
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setIsFormSent(true);
@@ -134,23 +142,22 @@ export default function Contact({ data }: any) {
 
           <div className="w-full max-w-xs md:max-w-sm space-y-3">
             <a
-              href={data.contactWhatsapp}
-              target="_blank"
+              href={`https://wa.me/${whatsapp}`}
               className="flex items-center gap-4 group p-4 rounded-xl border border-[#FDFBF7]/5 bg-[#FDFBF7]/[0.02] hover:border-[#a28468]/20 hover:bg-[#a28468]/[0.05] transition-all duration-300"
             >
               <FaWhatsapp className="text-[#a28468] text-lg" />
               <div>
                 <p className="text-[9px] text-[#FDFBF7]/20 uppercase tracking-[0.25em]">
-                  Napisz (najszybciej)
+                  Whatsapp
                 </p>
                 <p className="text-[#FDFBF7]/60 group-hover:text-[#a28468] transition-colors text-sm mt-0.5">
-                  {data.contactPhone}
+                  {whatsapp}
                 </p>
               </div>
             </a>
 
             <a
-              href={`mailto:${data.contactEmail}`}
+              href={`mailto:${email}`}
               className="flex items-center gap-4 group p-4 rounded-xl border border-[#FDFBF7]/5 bg-[#FDFBF7]/[0.02] hover:border-[#a28468]/20 hover:bg-[#a28468]/[0.05] transition-all duration-300"
             >
               <FaEnvelope className="text-[#a28468] text-lg" />
@@ -159,20 +166,24 @@ export default function Contact({ data }: any) {
                   E-mail
                 </p>
                 <p className="text-[#FDFBF7]/60 group-hover:text-[#a28468] transition-colors text-sm mt-0.5 break-all">
-                  {data.contactEmail}
+                  {email}
                 </p>
               </div>
             </a>
 
             <div className="pt-6 flex gap-3 justify-center md:justify-start">
               <a
-                href="#"
+                href={instagram || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-11 h-11 border border-[#FDFBF7]/10 rounded-full flex items-center justify-center text-[#FDFBF7]/30 hover:text-[#a28468] hover:border-[#a28468]/40 transition-all duration-300 hover:bg-[#a28468]/[0.05]"
               >
                 <FaInstagram size={15} />
               </a>
               <a
-                href="#"
+                href={facebook || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-11 h-11 border border-[#FDFBF7]/10 rounded-full flex items-center justify-center text-[#FDFBF7]/30 hover:text-[#a28468] hover:border-[#a28468]/40 transition-all duration-300 hover:bg-[#a28468]/[0.05]"
               >
                 <FaFacebook size={15} />
