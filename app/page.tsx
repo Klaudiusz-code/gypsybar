@@ -194,6 +194,11 @@ query HomePage {
       servicesItems {
         title
         description
+          imageOffer{
+          node{
+            sourceUrl
+          }
+        }
       }
     }
 

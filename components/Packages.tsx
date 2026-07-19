@@ -109,11 +109,11 @@ export default function Packages({ data, settings }: PackagesProps) {
         </div>
 
         <div className="bg-[#0e1c22] border border-white/[0.05] p-8 md:p-12 rounded-sm mb-8 shadow-2xl shadow-black/30">
-          <div className="mb-12 border-b border-white/[0.05] pb-8">
-            <h3 className="font-playfair text-4xl md:text-5xl text-[#FDFBF7]/90 tracking-tight">
+          <div className="mb-12 border-b border-white/[0.05] text-center pb-8">
+            <h3 className="font-playfair text-4xl md:text-5xl text-[#FDFBF7]/90 tracking-tight text-center">
               {data.pakietBasic.nazwaPakietu}
             </h3>
-            <p className="text-[#FDFBF7]/30 mt-3 text-sm max-w-md">
+            <p className="text-[#FDFBF7]/30 mt-3 text-sm  text-center">
               {data.pakietBasic.podtytul}
             </p>
           </div>

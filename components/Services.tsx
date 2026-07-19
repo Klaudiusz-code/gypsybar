@@ -9,7 +9,10 @@ export default function Services({ data }: any) {
   if (!data || !data.servicesItems) return null;
 
   return (
-    <section id="oferta" className="relative pt-24 pb-32 px-4 sm:px-6 md:px-12 bg-[#0f1a1f] overflow-hidden">
+    <section
+      id="oferta"
+      className="relative pt-24 pb-32 px-4 sm:px-6 md:px-12 bg-[#0f1a1f] overflow-hidden"
+    >
       <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-16 relative z-10 pt-4 sm:pt-8">
         <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-5 font-medium">
           {data.servicesLabel}
@@ -34,8 +37,8 @@ export default function Services({ data }: any) {
       <div className="max-w-[1400px] mx-auto relative z-10 flex flex-col md:flex-row h-auto md:h-[550px] lg:h-[600px] gap-3 md:gap-4">
         {data.servicesItems.map((item: any, i: any) => {
           const isActive = activeIndex === i;
-          const hasImage = item.imageUrl;
-
+          const imageUrl = item.imageOffer?.node?.sourceUrl;
+          const hasImage = !!imageUrl;
           const imgClasses = `object-cover transition-all duration-1000 hidden md:block ${
             isActive
               ? "opacity-30 scale-100 md:opacity-40"
@@ -58,7 +61,7 @@ export default function Services({ data }: any) {
             >
               {hasImage && (
                 <Image
-                  src=""
+                  src={imageUrl}
                   alt={item.title}
                   fill
                   className={imgClasses}

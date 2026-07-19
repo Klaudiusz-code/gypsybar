@@ -162,6 +162,11 @@ query HomePageEN {
         servicesItems {
           title
           description
+          imageOffer{
+          node{
+            sourceUrl
+          }
+        }
         }
       }
     sekcjaGaleria {
