@@ -15,27 +15,64 @@ import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
 
 export async function generateMetadata() {
+
+  const res = await fetch("https://cms.gypsysbar.pl/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `
+        query SeoEN {
+          page(id: "en", idType: URI) {
+            seo {
+              title
+              description
+            }
+          }
+        }
+      `,
+    }),
+    cache: "no-store",
+  });
+
+
+  const json = await res.json();
+
+
+  console.log(
+    "SEO FULL RESPONSE:",
+    JSON.stringify(json, null, 2)
+  );
+
+
+  const seo = json?.data?.page?.seo;
+
+
+  console.log("SEO DATA:", seo);
+
+
   return {
-    title: "Gypsy's Bar | Premium Mobile Cocktail Bar for Weddings & Events",
+    title:
+      seo?.title || 
+      "abcs",
+
 
     description:
-      "Gypsy's Bar creates unforgettable cocktail experiences for weddings, corporate events and private celebrations. Craft cocktails, handmade ingredients and professional mixology brought directly to your event.",
+      seo?.description ||
+      "Gypsy's Bar creates unforgettable cocktail experiences for weddings, corporate events and private celebrations.",
 
-    keywords: [
-      "mobile cocktail bar",
-      "wedding cocktail bar",
-      "event cocktail catering",
-      "premium cocktail service",
-      "bartender for weddings",
-      "craft cocktails",
-      "mixology events",
-    ],
 
     openGraph: {
-      title: "Gypsy's Bar | Premium Mobile Cocktail Bar for Weddings & Events",
+      title:
+        seo?.title ||
+        "Gypsy's Bar | Premium Mobile Cocktail Bar for Weddings & Events",
+
 
       description:
-        "Premium mobile cocktail bar experience with handcrafted cocktails, professional mixologists and the atmosphere of a top cocktail bar brought to your event.",
+        seo?.description ||
+        "Premium cocktail experience for weddings and events.",
+
 
       url: "https://gypsysbar.pl/en",
 
@@ -47,28 +84,42 @@ export async function generateMetadata() {
 
       images: [
         {
-          url: "/hero.jpg",
+          url:
+            "https://cms.gypsysbar.pl/wp-content/uploads/2026/07/2.jpg",
+
           width: 1200,
+
           height: 630,
-          alt: "Gypsy's Bar Premium Mobile Cocktail Bar",
+
+          alt: "Gypsy's Bar Cocktail Experience",
         },
       ],
     },
 
+
     twitter: {
       card: "summary_large_image",
 
-      title: "Gypsy's Bar | Premium Mobile Cocktail Bar",
+      title:
+        seo?.title ||
+        "Gypsy's Bar | Premium Mobile Cocktail Bar",
+
 
       description:
-        "Craft cocktails and professional mixology for weddings, events and private celebrations.",
+        seo?.description ||
+        "Craft cocktails and professional mixology for events.",
 
-      images: ["https://cms.gypsysbar.pl/wp-content/uploads/2026/07/2.jpg"],
+
+      images: [
+        "https://cms.gypsysbar.pl/wp-content/uploads/2026/07/2.jpg",
+      ],
     },
+
 
     alternates: {
       canonical: "https://gypsysbar.pl/en",
     },
+
 
     robots: {
       index: true,
@@ -107,7 +158,7 @@ query GlobalSettings {
 `;
 const QUERY_HOME_EN = `
 query HomePageEN {
-  page(id: "home", idType: URI) {
+  page(id: "en", idType: URI) {
     title
 
     sekcjaHero {
@@ -160,13 +211,13 @@ query HomePageEN {
         servicesTitle
         servicesDescription
         servicesItems {
-          title
-          description
-          imageOffer{
+        imageOffer{
           node{
             sourceUrl
           }
         }
+          title
+          description
         }
       }
     sekcjaGaleria {

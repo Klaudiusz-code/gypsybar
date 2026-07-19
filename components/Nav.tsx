@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation"; // TUTAJ JEST POPRAWKA (dodane {})
 import { FaBars, FaCocktail, FaInstagram, FaFacebook } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 
@@ -24,15 +24,12 @@ const navTranslations = {
     { href: "#kontakt", label: "Contact" },
   ],
 };
-
 export default function Nav({ settings }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const pathname = usePathname();
-
   const lang = pathname.startsWith("/en") ? "en" : "pl";
-
   const navLinks = navTranslations[lang];
 
   useEffect(() => {
@@ -41,7 +38,6 @@ export default function Nav({ settings }: any) {
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -63,7 +59,7 @@ export default function Nav({ settings }: any) {
           <a
             href={lang === "en" ? "/en" : "/"}
             onClick={() => setIsOpen(false)}
-            className=" hover:opacity-100 transition-opacity"
+            className="hover:opacity-100 transition-opacity"
           >
             <Image
               src="/logos-g.svg"
@@ -159,14 +155,17 @@ export default function Nav({ settings }: any) {
         </div>
       </nav>
 
+      {/* MENU MOBILNE */}
       <div
-        className={`fixed inset-0 bg-[#1b3745] z-[60] flex flex-col transition-all duration-700 lg:hidden ${
+        // 1. DODANO: overflow-hidden - blokuje wychodzenie elementów poza ekran
+        className={`fixed inset-0 bg-[#1b3745] z-[60] flex flex-col overflow-hidden transition-all duration-700 lg:hidden ${
           isOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="relative z-20 flex items-center justify-between p-6 border-b border-white/5">
+        {/* 2. ZMNIEJSZONO: p-6 na px-6 py-4 (mniej miejsca na górze) */}
+        <div className="relative z-20 flex items-center justify-between px-6 py-4 border-b border-white/5">
           <a
             href={lang === "en" ? "/en" : "/"}
             onClick={() => setIsOpen(false)}
@@ -195,20 +194,22 @@ export default function Nav({ settings }: any) {
           </button>
         </div>
 
+        {/* 3. ZMNIEJSZONO: py-4 na py-3 przy linkach, żeby nie rozpychały ekranu */}
         <div className="flex-1 flex flex-col justify-center pl-8">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="text-4xl font-playfair text-white/70 hover:text-[#a28468] py-4"
+              className="text-4xl font-playfair text-white/70 hover:text-[#a28468] py-3"
             >
               {link.label}
             </a>
           ))}
         </div>
 
-        <div className="p-8 border-t border-white/5 flex flex-col gap-6">
+        {/* 4. ZMNIEJSZONO: p-8 na px-8 py-6 i gap-6 na gap-4 (mniej miejsca na samym dole) */}
+        <div className="px-8 py-6 border-t border-white/5 flex flex-col gap-4">
           <span className="text-[10px] tracking-[0.3em] uppercase text-white/30">
             {lang === "en"
               ? "Available for season 2026/2027"

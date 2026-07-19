@@ -28,7 +28,6 @@ export default function Experience({ data }: ExperienceProps) {
       </div>
 
       <div className="max-w-[680px] lg:max-w-[780px] mx-auto relative z-10">
-        {/* HEADER */}
         <div className="mb-12 sm:mb-16 md:mb-20">
           <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-3 sm:mb-4 font-medium">
             {data.malyNaglowek}
@@ -39,9 +38,6 @@ export default function Experience({ data }: ExperienceProps) {
               {data.years}
             </span>
 
-            <span className="text-[#a28468]/50 text-[9px] sm:text-[10px] tracking-[0.25em] uppercase">
-              lat
-            </span>
           </div>
 
           <h2 className="font-playfair text-[20px] sm:text-[24px] md:text-[30px] text-[#1b3745] leading-[1.25] mb-3">

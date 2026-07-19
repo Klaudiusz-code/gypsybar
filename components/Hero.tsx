@@ -4,12 +4,13 @@ import { FaCocktail } from "react-icons/fa";
 
 export default function Hero({ data }: any) {
   if (!data) return null;
-  const words = data.heroTitle?.trim().split(/\s+/) || [];
-  const lastWord = words.pop();
+
+  const titleText = data.heroTitle?.trim() || "";
+  const words = titleText.split(/\s+/) || [];
+  const lastWord = words.pop() || "";
 
   return (
-    <section className="relative w-full h-[90vh] md:h-[75vh] lg:h-[80vh] md:min-h-[550px] overflow-hidden bg-[#1b3745] pt-24 md:pt-28 lg:pt-32">
-      {" "}
+    <section className="relative w-full h-[90vh] md:h-[80vh] lg:h-[85vh] overflow-hidden bg-[#1b3745]">
       <div className="absolute inset-0 z-0">
         <img
           src="/hero.jpg"
@@ -17,8 +18,10 @@ export default function Hero({ data }: any) {
           className="w-full h-full object-cover object-center scale-105 animate-slowZoom"
         />
       </div>
+
       <div className="absolute inset-0 bg-gradient-to-r from-[#1b3745] via-[#1b3745]/80 to-[#1b3745]/30 z-10" />
-      <div className="absolute bottom-20 right-6 lg:right-20 z-10 hidden md:flex flex-col items-end gap-3">
+
+      <div className="absolute bottom-24 right-6 lg:right-20 z-10 hidden md:flex flex-col items-end gap-3">
         <div className="w-32 h-44 lg:w-40 lg:h-56 overflow-hidden border border-[#a28468]/40 p-1.5 bg-[#1b3745]/50 backdrop-blur-sm transform rotate-3 hover:rotate-0 transition-all duration-500 shadow-xl">
           <img
             src="/card1.jpg"
@@ -41,24 +44,26 @@ export default function Hero({ data }: any) {
           />
         </div>
       </div>
+
       <div className="absolute bottom-0 left-0 w-full h-[50vh] bg-gradient-to-t from-[#0a1218] to-transparent z-20" />
-      <div className="relative z-40 h-full max-w-[1400px] mx-auto w-full px-6 lg:px-16 flex flex-col justify-end pb-16 md:pb-20">
+
+      <div className="relative z-40 h-full max-w-[1400px] mx-auto w-full px-6 lg:px-16 flex flex-col justify-end pt-28 pb-16 md:pt-36 md:pb-20 lg:pt-40 lg:pb-24">
         <div className="max-w-2xl animate-fadeUp">
-          <div className="mb-6 md:mb-8">
+          <div className="mb-4 md:mb-6">
             <span className="text-[#a28468] text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase font-bold">
               Gypsy&apos;s Cocktail Bar
             </span>
           </div>
 
-          <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-6xl text-white font-bold leading-[1.1] mb-6 md:mb-8 whitespace-pre-line">
+          <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-6xl text-white font-bold leading-[1.15] mb-5 md:mb-7 whitespace-pre-line">
             {words.join(" ")} <span className="text-[#a28468]">{lastWord}</span>
           </h1>
 
-          <p className="text-white/50 text-sm sm:text-[15px] md:text-base leading-[1.7] max-w-lg mb-8 md:mb-10">
+          <p className="text-white/50 text-sm sm:text-[15px] md:text-base leading-[1.7] max-w-lg mb-7 md:mb-9">
             {data.heroSubtitle}
           </p>
 
-          <div className="flex flex-wrap gap-x-3 gap-y-2.5 mb-10 md:mb-12">
+          <div className="flex flex-wrap gap-x-3 gap-y-2.5 mb-8 md:mb-10">
             {data.heroCategories?.map((cat: any, i: any) => (
               <span
                 key={i}
@@ -69,7 +74,7 @@ export default function Hero({ data }: any) {
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             {data.heroButtonPrimary && (
               <a
                 href={data.heroButtonPrimary.url}
@@ -84,7 +89,7 @@ export default function Hero({ data }: any) {
             {data.heroButtonSecondary && (
               <a
                 href={data.heroButtonSecondary.url}
-                className="group flex items-center justify-center sm:justify-start text-white/60 hover:text-white px-4 py-4 sm:py-4 text-[11px] font-bold tracking-[0.15em] uppercase transition-all duration-300"
+                className="group flex items-center justify-center sm:justify-start text-white/60 hover:text-white px-4 py-4 text-[11px] font-bold tracking-[0.15em] uppercase transition-all duration-300"
               >
                 {data.heroButtonSecondary.text}
                 <span className="ml-3 w-8 h-px bg-white/30 group-hover:w-12 group-hover:bg-[#a28468] transition-all duration-300"></span>

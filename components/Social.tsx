@@ -114,7 +114,7 @@ export default function SocialSection({ settings }: SocialSectionProps) {
                 <div className="w-full pt-8 border-t border-white/[0.05] flex justify-center">
 
                   <span className="text-[#FDFBF7]/20 text-[10px] uppercase tracking-widest flex items-center gap-2 group-hover:text-[#FDFBF7]/60 transition-colors">
-                    Obserwuj →
+                    CLICK  →
                   </span>
 
                 </div>
