@@ -8,7 +8,7 @@ export default function Hero({ data }: any) {
   const lastWord = words.pop();
 
   return (
-    <section className="relative w-full h-[100vh] md:h-[85vh] md:min-h-[600px] overflow-hidden bg-[#1b3745]">
+    <section className="relative w-full h-[90vh] md:h-[75vh] lg:h-[80vh] md:min-h-[550px] overflow-hidden bg-[#1b3745] pt-20 md:pt-24">
       <div className="absolute inset-0 z-0">
         <img
           src="/hero.jpg"
@@ -45,26 +45,23 @@ export default function Hero({ data }: any) {
 
       <div className="absolute bottom-0 left-0 w-full h-[50vh] bg-gradient-to-t from-[#0a1218] to-transparent z-20" />
 
-      <div className="relative z-40 h-full max-w-[1400px] mx-auto w-full px-6 lg:px-16 flex flex-col justify-end pb-12 md:justify-center md:pb-0">
+      <div className="relative z-40 h-full max-w-[1400px] mx-auto w-full px-6 lg:px-16 flex flex-col justify-end pb-16 md:pb-20">
         <div className="max-w-2xl animate-fadeUp">
-          {/* Etykieta */}
           <div className="mb-6 md:mb-8">
             <span className="text-[#a28468] text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase font-bold">
               Gypsy&apos;s Cocktail Bar
             </span>
           </div>
 
-          {/* Nagłówek */}
-          <h1 className="font-playfair text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl text-white font-bold leading-[1.05] mb-6 md:mb-8 whitespace-pre-line">
+       
+          <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-6xl text-white font-bold leading-[1.1] mb-6 md:mb-8 whitespace-pre-line">
             {words.join(" ")} <span className="text-[#a28468]">{lastWord}</span>
           </h1>
 
-          {/* Podtytuł - lekko oddzielony */}
-          <p className="text-white/50 text-[14px] sm:text-[15px] md:text-base leading-[1.7] max-w-lg mb-8 md:mb-10">
+          <p className="text-white/50 text-sm sm:text-[15px] md:text-base leading-[1.7] max-w-lg mb-8 md:mb-10">
             {data.heroSubtitle}
           </p>
 
-          {/* Tagi - zwarty blok z ładnymi odstępami */}
           <div className="flex flex-wrap gap-x-3 gap-y-2.5 mb-10 md:mb-12">
             {data.heroCategories?.map((cat: any, i: any) => (
               <span
@@ -76,8 +73,7 @@ export default function Hero({ data }: any) {
             ))}
           </div>
 
-          {/* Przyciski - na mobile ułożone pionowo z pełną szerokością, na desktopie obok siebie */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
             {data.heroButtonPrimary && (
               <a
                 href={data.heroButtonPrimary.url}

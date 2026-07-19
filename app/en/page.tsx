@@ -11,6 +11,8 @@ import Contact from "@/components/Contact";
 import Experience from "@/components/Experience";
 import SocialSection from "@/components/Social";
 import Footer from "@/components/Footer";
+import Services from "@/components/Services";
+import Testimonials from "@/components/Testimonials";
 
 export async function generateMetadata() {
   return {
@@ -146,14 +148,22 @@ query HomePageEN {
       aboutTitle
       kimJestem
       aboutContent
-
       aboutStats {
         value
         label
       }
     }
 
+  sekcjaOferta {
 
+        servicesLabel
+        servicesTitle
+        servicesDescription
+        servicesItems {
+          title
+          description
+        }
+      }
     sekcjaGaleria {
       galleryLabel
       galleryTitle
@@ -168,7 +178,21 @@ query HomePageEN {
         }
       }
     }
+    sekcjaOpinie {
 
+      testimonialsLabel
+      testimonialsTitle
+      testimonialsItems {
+        role
+        content
+        name
+      }
+      przycisk{
+        text
+        linkDoOpiniGoogle
+        liczbaOpini
+      }
+    }
 
     sekcjaMenu {
       menuLabel
@@ -241,9 +265,6 @@ query HomePageEN {
 
    
   }
-
-  
-
 
 }
 
@@ -361,7 +382,11 @@ export default async function EnHomePage() {
 
       <Experience data={page.sekcjaDoswiadczenie} />
 
-      <Gallery data={page.sekcjaGaleria} settings={settings} />
+      <Services data={page.sekcjaOferta} />
+
+      <Gallery data={page.sekcjaGalseria} settings={settings} />
+
+      <Testimonials data={page.sekcjaOpinie} />
 
       <Menu data={page.sekcjaMenu} />
 

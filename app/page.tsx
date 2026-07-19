@@ -192,14 +192,6 @@ query HomePage {
 
 
       servicesItems {
-
-        imageUrl {
-          node {
-            sourceUrl
-          }
-        }
-
-
         title
         description
       }
@@ -228,9 +220,6 @@ query HomePage {
     }
 
 
-
-
-
     sekcjaOpinie {
 
       testimonialsLabel
@@ -243,11 +232,12 @@ query HomePage {
         content
         name
       }
+      przycisk{
+        text
+        linkDoOpiniGoogle
+        liczbaOpini
+      }
     }
-
-
-
-
 
 
     sekcjaMenu {
@@ -272,11 +262,6 @@ query HomePage {
         }
       }
     }
-
-
-
-
-
 
     sekcjaPakiety {
 
@@ -312,9 +297,6 @@ query HomePage {
           bazaAlkholu
           drinki
         }
-
-
-
         cta {
 
 
@@ -322,9 +304,7 @@ query HomePage {
 
             linkDoWhatshapa
           }
-
-
-          instagram {
+         instagram {
 
             linkDoInsta
           }
@@ -332,17 +312,10 @@ query HomePage {
 
           email
         }
-
-
-
         naglowekCta
         opisCta
 
       }
-
-
-
-
 
       pakietFundamental {
 
@@ -366,29 +339,18 @@ query HomePage {
 
 
       }
-
-      
-   
-
     }
 
     sekcjaDoswiadczenie {
-
-
       malyNaglowek
       tytul
       years
-
-
       punktyDoswiadczenia {
 
         numer
         tytul
         opis
       }
-
-
-
       sekcjaOLokalu {
 
         naglowekSekcji
@@ -396,20 +358,13 @@ query HomePage {
         opisLokalu
 
       }
-
-
       cytat
 
     }
 
     sekcjaFaq {
-
-
       faqLabel
       faqTitle
-
-
-
       faqItems {
 
         question
@@ -423,9 +378,6 @@ query HomePage {
       contactLabel
       contactTitle
       contactDescription
-
-
-
       contactImageUrl {
 
         node {
@@ -439,9 +391,6 @@ query HomePage {
       contactPhone
       contactWhatsapp
       contactEmail
-
-
-
       formNameLabel
       formDateLabel
       formMessageLabel
@@ -451,9 +400,7 @@ query HomePage {
 
 
     sekcjaSocialMedia {
-
-
-      socialLabel
+     socialLabel
       socialTitle
       socialDescription
 
@@ -539,7 +486,6 @@ export default async function PlHomePage() {
       <Faq data={page.sekcjaFaq} />
 
       <Contact data={page.sekcjaKontakt} settings={settings} />
-
 
       <SocialSection settings={settings} />
       <Footer />

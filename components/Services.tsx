@@ -9,7 +9,7 @@ export default function Services({ data }: any) {
   if (!data || !data.servicesItems) return null;
 
   return (
-    <section className="relative pt-24 pb-32 px-4 sm:px-6 md:px-12 bg-[#0f1a1f] overflow-hidden">
+    <section id="oferta" className="relative pt-24 pb-32 px-4 sm:px-6 md:px-12 bg-[#0f1a1f] overflow-hidden">
       <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-16 relative z-10 pt-4 sm:pt-8">
         <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-5 font-medium">
           {data.servicesLabel}
@@ -58,7 +58,7 @@ export default function Services({ data }: any) {
             >
               {hasImage && (
                 <Image
-                  src={item.imageUrl}
+                  src=""
                   alt={item.title}
                   fill
                   className={imgClasses}

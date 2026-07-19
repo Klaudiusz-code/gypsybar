@@ -25,11 +25,7 @@ const navTranslations = {
   ],
 };
 
-interface NavProps {
-  settings?: any;
-}
-
-export default function Nav({ settings }: NavProps) {
+export default function Nav({ settings }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -38,20 +34,6 @@ export default function Nav({ settings }: NavProps) {
   const lang = pathname.startsWith("/en") ? "en" : "pl";
 
   const navLinks = navTranslations[lang];
-
-  const logo =
-    settings?.logo?.node?.sourceUrl || "/logos-g.svg";
-
-  const logoAlt =
-    settings?.logo?.node?.altText || "Logo";
-
-
-  const instagram =
-    settings?.socialMedia?.instagramUrl || "#";
-
-  const facebook =
-    settings?.socialMedia?.facebook || "#";
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,6 +47,8 @@ export default function Nav({ settings }: NavProps) {
     };
   }, []);
 
+  const instagram = settings?.socialMedia?.instagramUrl;
+  const facebook = settings?.socialMedia?.facebook;
 
   return (
     <>
@@ -75,65 +59,40 @@ export default function Nav({ settings }: NavProps) {
             : "bg-transparent border-b border-transparent"
         }`}
       >
-
         <div className="max-w-[1400px] mx-auto w-full px-6 lg:px-16 h-20 flex items-center justify-between">
-
-
           <a
             href={lang === "en" ? "/en" : "/"}
             onClick={() => setIsOpen(false)}
+            className=" hover:opacity-100 transition-opacity"
           >
             <Image
-              src={logo}
-              alt={logoAlt}
+              src="/logos-g.svg"
+              alt="Logo"
               width={70}
               height={36}
               className="object-contain"
             />
           </a>
 
-
-
           <div className="hidden lg:flex items-center gap-1">
-
             {navLinks.map((link, i) => (
-
-              <div
-                key={link.href}
-                className="flex items-center gap-1"
-              >
-
+              <div key={link.href} className="flex items-center gap-1">
                 <a
-                  href={link.href}
+                  href={`${link.href}`}
                   className="group relative text-[11px] tracking-[0.25em] uppercase text-white/50 hover:text-white px-4 py-2 transition-colors duration-500"
                 >
-
                   {link.label}
-
                   <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-px bg-[#a28468] transition-all duration-500 group-hover:w-2/3" />
-
                 </a>
-
-
                 {i < navLinks.length - 1 && (
                   <span className="w-px h-4 bg-white/10" />
                 )}
-
               </div>
-
             ))}
-
           </div>
 
-
-
-
-
           <div className="hidden lg:flex items-center gap-4">
-
-
             <div className="flex items-center bg-white/5 p-1 rounded-full border border-white/10">
-
               <a
                 href="/"
                 className={`px-2.5 py-1 rounded-full text-sm transition-all ${
@@ -144,8 +103,6 @@ export default function Nav({ settings }: NavProps) {
               >
                 🇵🇱
               </a>
-
-
               <a
                 href="/en"
                 className={`px-2.5 py-1 rounded-full text-sm transition-all ${
@@ -156,86 +113,51 @@ export default function Nav({ settings }: NavProps) {
               >
                 🇬🇧
               </a>
-
             </div>
-
-
-
-
 
             <div className="flex items-center gap-2">
-
-
               <a
-                href={instagram}
+                href={instagram || "#"}
                 target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-[#a28468]"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-[#a28468] transition-all"
               >
-                <FaInstagram size={13}/>
+                <FaInstagram size={13} />
               </a>
 
-
-
               <a
-                href={facebook}
+                href={facebook || "#"}
                 target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-[#a28468]"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-[#a28468] transition-all"
               >
-                <FaFacebook size={13}/>
+                <FaFacebook size={13} />
               </a>
-
-
             </div>
 
-
-
-            <span className="w-px h-5 bg-white/10"/>
-
-
-
+            <span className="w-px h-5 bg-white/10" />
 
             <a
               href="#kontakt"
               className="flex items-center gap-3 bg-[#a28468] text-[#1b3745] px-6 py-2.5 rounded-sm text-[11px] font-bold tracking-[0.15em] uppercase hover:bg-[#c4a882] transition-all"
             >
-
               <span className="relative flex h-2 w-2">
-
-                <span className="animate-ping absolute h-full w-full rounded-full bg-[#1b3745]/30"/>
-
-                <span className="relative rounded-full h-2 w-2 bg-[#1b3745]/60"/>
-
+                <span className="animate-ping absolute h-full w-full rounded-full bg-[#1b3745]/30" />
+                <span className="relative rounded-full h-2 w-2 bg-[#1b3745]/60" />
               </span>
-
-
               {lang === "en" ? "Get a quote" : "Wycena"}
-
-              <FaCocktail/>
-
+              <FaCocktail />
             </a>
-
-
           </div>
-
-
-
 
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden text-white text-xl w-11 h-11 flex items-center justify-center rounded-full border border-white/10"
           >
-            {isOpen ? <FaXmark/> : <FaBars/>}
+            {isOpen ? <FaXmark /> : <FaBars />}
           </button>
-
-
         </div>
-
       </nav>
-
-
-
 
       <div
         className={`fixed inset-0 bg-[#1b3745] z-[60] flex flex-col transition-all duration-700 lg:hidden ${
@@ -244,82 +166,64 @@ export default function Nav({ settings }: NavProps) {
             : "opacity-0 pointer-events-none"
         }`}
       >
-
-
         <div className="relative z-20 flex items-center justify-between p-6 border-b border-white/5">
-
-
           <a
-            href={lang==="en" ? "/en" : "/"}
-            onClick={()=>setIsOpen(false)}
+            href={lang === "en" ? "/en" : "/"}
+            onClick={() => setIsOpen(false)}
+            className="opacity-80 hover:opacity-100 transition-opacity"
           >
-
             <Image
-              src={logo}
-              alt={logoAlt}
+              src="/logos-g.svg"
+              alt="Logo"
               width={100}
               height={35}
               className="object-contain"
             />
-
           </a>
 
+          <div className="flex items-center bg-white/5 p-1 rounded-full">
+            <a href="/" className="px-2 py-1 text-xs">
+              🇵🇱
+            </a>
+            <a href="/en" className="px-2 py-1 text-xs">
+              🇬🇧
+            </a>
+          </div>
 
-          <button
-            onClick={()=>setIsOpen(false)}
-            className="text-white"
-          >
-            <FaXmark size={24}/>
+          <button onClick={() => setIsOpen(false)} className="text-white">
+            <FaXmark size={24} />
           </button>
-
-
         </div>
 
-
-
-
         <div className="flex-1 flex flex-col justify-center pl-8">
-
-          {navLinks.map((link)=>(
-
+          {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              onClick={()=>setIsOpen(false)}
+              onClick={() => setIsOpen(false)}
               className="text-4xl font-playfair text-white/70 hover:text-[#a28468] py-4"
             >
               {link.label}
             </a>
-
           ))}
-
         </div>
 
-
-
-        <div className="p-8 border-t border-white/5">
-
+        <div className="p-8 border-t border-white/5 flex flex-col gap-6">
+          <span className="text-[10px] tracking-[0.3em] uppercase text-white/30">
+            {lang === "en"
+              ? "Available for season 2026/2027"
+              : "Dostępny na sezon 2026/2027"}
+          </span>
           <a
             href="#kontakt"
-            onClick={()=>setIsOpen(false)}
+            onClick={() => setIsOpen(false)}
             className="flex items-center justify-center gap-2 bg-[#a28468] text-[#1b3745] py-3.5 uppercase text-[11px] font-bold"
           >
-
-            <FaCocktail/>
-
-            {lang==="en"
-              ? "Check availability"
-              : "Zapytaj o termin"
-            }
-
+            <FaCocktail />
+            {lang === "en" ? "Check availability" : "Zapytaj o termin"}
           </a>
-
         </div>
-
-
-
       </div>
-
     </>
   );
 }

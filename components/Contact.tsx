@@ -18,14 +18,41 @@ export default function Contact({ data, settings }: any) {
   const email = globalContact?.email;
 
   const instagram = globalContact?.socialMedia?.instagramUrl;
-
   const facebook = globalContact?.socialMedia?.facebook;
 
   const [isFormSent, setIsFormSent] = useState(false);
-  const handleSubmit = (e: any) => {
+  const [isSending, setIsSending] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsFormSent(true);
-    setTimeout(() => setIsFormSent(false), 3000);
+
+    setIsSending(true);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("https://formspree.io/f/mlgqbvek", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setIsFormSent(true);
+        form.reset();
+
+        setTimeout(() => {
+          setIsFormSent(false);
+        }, 4000);
+      }
+    } catch (error) {
+      console.error("Formspree error:", error);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const today = new Date().toISOString().split("T")[0];
@@ -44,6 +71,7 @@ export default function Contact({ data, settings }: any) {
           <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-5 font-medium">
             {data.contactLabel}
           </p>
+
           <h2 className="font-playfair text-3xl md:text-5xl text-[#fff] leading-tight">
             {data.contactTitle
               ?.split(" ")
@@ -56,19 +84,28 @@ export default function Contact({ data, settings }: any) {
                 </span>
               ))}
           </h2>
+
           <p className="text-[#FDFBF7]/20 text-sm leading-relaxed mb-12 max-w-sm">
             {data.contactDescription}
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-8">
+            <input
+              type="hidden"
+              name="_subject"
+              value="New Gypsy's Bar booking request"
+            />
+
             <div className="relative border-b border-[#FDFBF7]/10 focus-within:border-[#a28468] transition-colors pb-3">
               <input
                 type="text"
                 id="name"
+                name="name"
                 placeholder=" "
                 required
                 className="peer w-full bg-transparent text-[#FDFBF7] placeholder-transparent focus:outline-none text-sm"
               />
+
               <label
                 htmlFor="name"
                 className="absolute left-0 top-0 text-sm text-[#FDFBF7]/20 transition-all peer-placeholder-shown:top-0 peer-placeholder-shown:text-base peer-focus:-top-5 peer-focus:text-[10px] peer-focus:text-[#a28468] peer-focus:tracking-widest peer-focus:uppercase peer-[:not(:placeholder-shown)]:-top-5 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:text-[#FDFBF7]/40"
@@ -81,10 +118,12 @@ export default function Contact({ data, settings }: any) {
               <input
                 type="date"
                 id="date"
+                name="date"
                 min={today}
                 required
                 className="w-full bg-transparent text-[#FDFBF7] focus:outline-none text-sm [color-scheme:dark]"
               />
+
               <label
                 htmlFor="date"
                 className="absolute left-0 -top-5 text-[10px] text-[#FDFBF7]/40 tracking-widest uppercase"
@@ -96,10 +135,12 @@ export default function Contact({ data, settings }: any) {
             <div className="relative border-b border-[#FDFBF7]/10 focus-within:border-[#a28468] transition-colors pb-3">
               <textarea
                 id="msg"
+                name="message"
                 rows={3}
                 placeholder=" "
                 className="peer w-full bg-transparent text-[#FDFBF7] placeholder-transparent focus:outline-none resize-none text-sm"
               />
+
               <label
                 htmlFor="msg"
                 className="absolute left-0 top-0 text-sm text-[#FDFBF7]/20 transition-all peer-placeholder-shown:top-0 peer-placeholder-shown:text-base peer-focus:-top-5 peer-focus:text-[10px] peer-focus:text-[#a28468] peer-focus:tracking-widest peer-focus:uppercase peer-[:not(:placeholder-shown)]:-top-5 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:text-[#FDFBF7]/40"
@@ -110,27 +151,30 @@ export default function Contact({ data, settings }: any) {
 
             <button
               type="submit"
+              disabled={isSending}
               className={`mt-6 w-full py-4 rounded-full text-[11px] font-bold tracking-[0.15em] uppercase transition-all duration-500 ${
                 isFormSent
-                  ? "bg-[#a28468]/20 text-[#a28468] border border-[#a28468]/30 cursor-default"
-                  : "bg-[#a28468] text-[#0e1c22] hover:bg-[#c4a882] hover:shadow-[0_10px_30px_-10px_rgba(162,132,104,0.4)]"
+                  ? "bg-[#a28468]/20 text-[#a28468] border border-[#a28468]/30"
+                  : "bg-[#a28468] text-[#0e1c22] hover:bg-[#c4a882]"
               }`}
             >
               {isFormSent
-                ? "Wysłano! Odezwiemy się wkrótce."
-                : data.formButtonText}
+                ? "Sent! We will contact you soon."
+                : isSending
+                  ? "Sending..."
+                  : data.formButtonText}
             </button>
           </form>
         </div>
-
         <div className="flex flex-col items-center md:items-end pt-8 md:pt-0">
           <div className="relative w-full max-w-xs md:max-w-sm aspect-[3/4] rounded-2xl overflow-hidden border-2 border-[#a28468]/20 mb-10 group shadow-2xl shadow-black/50">
             <Image
               src={avatarUrl}
-              alt="Twórca Gypsy's Bar"
+              alt="Gypsy's Bar creator"
               fill
               className="object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
             />
+
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a1218] via-[#0a1218]/20 to-transparent"></div>
 
             <div className="absolute bottom-6 left-6 right-6">
@@ -143,13 +187,17 @@ export default function Contact({ data, settings }: any) {
           <div className="w-full max-w-xs md:max-w-sm space-y-3">
             <a
               href={`https://wa.me/${whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-4 group p-4 rounded-xl border border-[#FDFBF7]/5 bg-[#FDFBF7]/[0.02] hover:border-[#a28468]/20 hover:bg-[#a28468]/[0.05] transition-all duration-300"
             >
               <FaWhatsapp className="text-[#a28468] text-lg" />
+
               <div>
                 <p className="text-[9px] text-[#FDFBF7]/20 uppercase tracking-[0.25em]">
                   Whatsapp
                 </p>
+
                 <p className="text-[#FDFBF7]/60 group-hover:text-[#a28468] transition-colors text-sm mt-0.5">
                   {whatsapp}
                 </p>
@@ -161,10 +209,12 @@ export default function Contact({ data, settings }: any) {
               className="flex items-center gap-4 group p-4 rounded-xl border border-[#FDFBF7]/5 bg-[#FDFBF7]/[0.02] hover:border-[#a28468]/20 hover:bg-[#a28468]/[0.05] transition-all duration-300"
             >
               <FaEnvelope className="text-[#a28468] text-lg" />
+
               <div>
                 <p className="text-[9px] text-[#FDFBF7]/20 uppercase tracking-[0.25em]">
                   E-mail
                 </p>
+
                 <p className="text-[#FDFBF7]/60 group-hover:text-[#a28468] transition-colors text-sm mt-0.5 break-all">
                   {email}
                 </p>
@@ -180,6 +230,7 @@ export default function Contact({ data, settings }: any) {
               >
                 <FaInstagram size={15} />
               </a>
+
               <a
                 href={facebook || "#"}
                 target="_blank"
