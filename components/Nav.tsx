@@ -97,7 +97,7 @@ export default function Nav({ settings }: any) {
                     : "hover:bg-white/5"
                 }`}
               >
-                🇵🇱
+                PL
               </a>
               <a
                 href="/en"
@@ -107,7 +107,7 @@ export default function Nav({ settings }: any) {
                     : "hover:bg-white/5"
                 }`}
               >
-                🇬🇧
+                EN
               </a>
             </div>
 
