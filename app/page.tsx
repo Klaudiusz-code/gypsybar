@@ -477,7 +477,7 @@ export default async function PlHomePage() {
 
       <Contact data={page.sekcjaKontakt} settings={settings} />
 
-      <SocialSection settings={settings} />
+      <SocialSection settings={settings} data={page.sekcjaSocialMedia} />
       <Footer />
     </main>
   );
