@@ -10,7 +10,9 @@ export default function Hero({ data }: any) {
   const lastWord = words.pop() || "";
 
   return (
-    <section className="relative w-full h-[100vh] md:h-[80vh] lg:h-[85vh] overflow-hidden bg-[#1b3745]">
+    // FIX: Zmieniono na min-h-[calc(100vh-5rem)] - idealnie dopasowuje się pod wysokość nawigacji (zakładając nav ~80px/5rem)
+    <section className="relative w-full min-h-[calc(100vh-5rem)] md:min-h-[calc(100vh-6rem)] overflow-hidden bg-[#1b3745]">
+      
       <div className="absolute inset-0 z-0">
         <img
           src="/hero.jpg"
@@ -19,9 +21,10 @@ export default function Hero({ data }: any) {
         />
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-r from-[#1b3745] via-[#1b3745]/80 to-[#1b3745]/30 z-10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#1b3745] via-[#1b3745]/80 to-[#1b3745]/30 z-10 pointer-events-none" />
 
-      <div className="absolute bottom-24 right-6 lg:right-20 z-10 hidden md:flex flex-col items-end gap-3">
+      {/* FIX: Zmieniono pozycjonowanie zdjęć - teraz są wyśrodkowane w pionie i widoczne tylko na dużych ekranach (lg:flex), żeby nie psuć layoutu na tabletach */}
+      <div className="absolute top-1/2 -translate-y-1/2 right-4 lg:right-16 z-10 hidden lg:flex flex-col items-end gap-3">
         <div className="w-32 h-44 lg:w-40 lg:h-56 overflow-hidden border border-[#a28468]/40 p-1.5 bg-[#1b3745]/50 backdrop-blur-sm transform rotate-3 hover:rotate-0 transition-all duration-500 shadow-xl">
           <img
             src="/card1.jpg"
@@ -45,12 +48,13 @@ export default function Hero({ data }: any) {
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 w-full h-[50vh] bg-gradient-to-t from-[#0a1218] to-transparent z-20" />
+      {/* FIX: Zmniejszony gradient na dole, żeby nie przyciemniał wyśrodkowanego tekstu, dodany pointer-events-none */}
+      <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-[#0a1218] to-transparent z-20 pointer-events-none" />
 
-      {/* FIX: Zmieniono pb-16 na pb-24 (mobile), md:pb-20 na md:pb-28, lg:pb-24 na lg:pb-32 */}
-      <div className="relative z-40 h-full max-w-[1400px] mx-auto w-full px-6 lg:px-16 flex flex-col mt-4 md:mt-0 pt-32 pb-24 md:pt-36 md:pb-28 lg:pt-36 lg:pb-32">
+      {/* FIX: Główny kontener z flex items-center. Usunięto mt-auto i gigantyczne pb, które wpychały przyciski pod ekran */}
+      <div className="relative z-40 h-full max-w-[1400px] mx-auto w-full px-6 lg:px-16 flex items-center py-24 md:py-32">
         
-        <div className="max-w-2xl animate-fadeUp mt-auto">
+        <div className="max-w-2xl animate-fadeUp">
           <div className="mb-4 md:mb-6">
             <span className="text-[#a28468] text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase font-bold">
               Gypsy&apos;s Cocktail Bar
@@ -76,7 +80,7 @@ export default function Hero({ data }: any) {
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-2">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             {data.heroButtonPrimary && (
               <a
                 href={data.heroButtonPrimary.url}

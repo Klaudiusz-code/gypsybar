@@ -159,7 +159,7 @@ export default function Testimonials({ data }: any) {
                 href={googleButton.linkDoOpiniGoogle}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center mt-6 px-8 py-4 rounded-full bg-[#a28468] text-[#0a1218] text-xs uppercase tracking-[0.2em] font-bold hover:bg-[#c4a882] transition-all"
+                className="inline-flex items-center justify-center mt-6 px-8 py-4 rounded-full bg-[#a28468] text-[#0a1218] text-[9px] md:text-xs uppercase tracking-[0.2em] font-bold hover:bg-[#c4a882] transition-all"
               >
                 {googleButton.text}
               </a>
