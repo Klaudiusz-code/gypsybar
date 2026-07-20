@@ -48,7 +48,7 @@ export default function SocialSection({ settings, data }: SocialSectionProps) {
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <p className="text-[#a28468] text-[10px] tracking-[0.5em] uppercase mb-6 font-medium">
-            {data?.socialTitle}
+            {data?.socialLabel}
           </p>
 
           <h2 className="font-playfair text-4xl sm:text-5xl md:text-6xl text-white font-bold leading-[1.05] mb-6">
