@@ -80,7 +80,7 @@ export default function Services({ data }: any) {
                   {hasImage && (
                     <div className="w-12 h-12 flex-shrink-0 rounded-lg overflow-hidden border border-[#1e3946]">
                       <img
-                        src={item.imageUrl}
+                        src={imageUrl}
                         alt=""
                         className="w-full h-full object-cover"
                       />
