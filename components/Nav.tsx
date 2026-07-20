@@ -210,11 +210,6 @@ export default function Nav({ settings }: any) {
 
         {/* 4. ZMNIEJSZONO: p-8 na px-8 py-6 i gap-6 na gap-4 (mniej miejsca na samym dole) */}
         <div className="px-8 py-6 border-t border-white/5 flex flex-col gap-4">
-          <span className="text-[10px] tracking-[0.3em] uppercase text-white/30">
-            {lang === "en"
-              ? "Available for season 2026/2027"
-              : "Dostępny na sezon 2026/2027"}
-          </span>
           <a
             href="#kontakt"
             onClick={() => setIsOpen(false)}

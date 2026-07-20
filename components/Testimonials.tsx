@@ -1,26 +1,25 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 const highlightText = (text: string) => {
-  return text.replace(
-    /\*(.*?)\*/g,
-
-    '<span class="text-[#d4b896]">$1</span>'
-  );
+  return text.replace(/\*(.*?)\*/g, '<span class="text-[#d4b896]">$1</span>');
 };
 
-const TestimonialCard = ({ item, isFeatured }: any) => {
+const TestimonialCard = ({ item, isFeatured, translations }: any) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showButton, setShowButton] = useState(false);
-  const [maxHeight, setMaxHeight] = useState("80px"); 
+  const [maxHeight, setMaxHeight] = useState("80px");
+
   const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (textRef.current) {
       const fullHeight = textRef.current.scrollHeight;
-      setShowButton(fullHeight > 82); 
-      
+
+      setShowButton(fullHeight > 82);
+
       if (isExpanded) {
         setMaxHeight(`${fullHeight}px`);
       } else {
@@ -42,7 +41,9 @@ const TestimonialCard = ({ item, isFeatured }: any) => {
       </span>
 
       <div
-        className={`flex gap-1 text-[#a28468]/40 mb-4 ${isFeatured ? "md:mb-0 md:shrink-0" : ""}`}
+        className={`flex gap-1 text-[#a28468]/40 mb-4 ${
+          isFeatured ? "md:mb-0 md:shrink-0" : ""
+        }`}
       >
         {[...Array(5)].map((_, index) => (
           <StarIcon key={index} className="w-3.5 h-3.5" />
@@ -53,13 +54,15 @@ const TestimonialCard = ({ item, isFeatured }: any) => {
         <div
           ref={textRef}
           className="overflow-hidden transition-all duration-500 ease-in-out"
-          style={{ maxHeight: maxHeight }}
+          style={{ maxHeight }}
         >
           <p
             className={`text-[#FDFBF7]/40 text-sm leading-[1.8] mb-6 ${
               isFeatured ? "md:text-base" : ""
             }`}
-            dangerouslySetInnerHTML={{ __html: highlightText(item.content) }}
+            dangerouslySetInnerHTML={{
+              __html: highlightText(item.content),
+            }}
           />
         </div>
 
@@ -68,7 +71,10 @@ const TestimonialCard = ({ item, isFeatured }: any) => {
             onClick={() => setIsExpanded(!isExpanded)}
             className="inline-flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase text-[#a28468]/50 hover:text-[#a28468] transition-all duration-300 mb-6 group/btn"
           >
-            <span>{isExpanded ? "Zwiń" : "Czytaj całość"}</span>
+            <span>
+              {isExpanded ? translations.collapse : translations.readMore}
+            </span>
+
             <svg
               className={`w-3 h-3 transition-transform duration-300 ${
                 isExpanded ? "rotate-180" : ""
@@ -88,6 +94,7 @@ const TestimonialCard = ({ item, isFeatured }: any) => {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-[#FDFBF7]/70 text-sm font-medium">{item.name}</p>
+
             <p className="text-[#a28468]/40 text-[10px] tracking-[0.2em] uppercase mt-1">
               {item.role}
             </p>
@@ -120,7 +127,24 @@ const TestimonialCard = ({ item, isFeatured }: any) => {
 };
 
 export default function Testimonials({ data }: any) {
+  const pathname = usePathname();
+  const lang = pathname.startsWith("/en") ? "en" : "pl";
+
+  const translations = {
+    pl: {
+      collapse: "Zwiń",
+      readMore: "Czytaj całość",
+    },
+    en: {
+      collapse: "Collapse",
+      readMore: "Read more",
+    },
+  };
+
+  const t = translations[lang];
+
   if (!data || !data.testimonialsItems) return null;
+
   const items = data.testimonialsItems;
   const googleButton = data.przycisk;
 
@@ -131,14 +155,20 @@ export default function Testimonials({ data }: any) {
           <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-5 font-medium">
             {data.testimonialsLabel}
           </p>
+
           <h2 className="font-playfair text-3xl md:text-5xl text-[#FDFBF7] leading-tight">
             {data.testimonialsTitle}
           </h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-16 md:mb-20">
-          {items.map((item: any, i: any) => (
-            <TestimonialCard key={i} item={item} isFeatured={i === 0} />
+          {items.map((item: any, i: number) => (
+            <TestimonialCard
+              key={i}
+              item={item}
+              isFeatured={i === 0}
+              translations={t}
+            />
           ))}
         </div>
 

@@ -1,14 +1,32 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function About({ data }: any) {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
 
+  const pathname = usePathname();
+  const isEnglish = pathname.startsWith("/en");
+
   if (!data) return null;
 
   const videoUrl = data.aboutVideoUrl?.node?.mediaItemUrl || "/gypsy.mp4";
+
+  const translations = {
+    playText: isEnglish
+      ? "Click to play with sound"
+      : "Kliknij, aby odtworzyć z dźwiękiem",
+
+    turnSoundOn: isEnglish ? "Turn sound on" : "Włącz dźwięk",
+
+    turnSoundOff: isEnglish ? "Turn sound off" : "Wyłącz dźwięk",
+
+    browserError: isEnglish
+      ? "Your browser does not support video playback."
+      : "Twoja przeglądarka nie obsługuje tagu wideo.",
+  };
 
   return (
     <section className="relative py-16 md:py-32 px-6 md:px-12 bg-[#FDFBF7] overflow-hidden">
@@ -24,7 +42,8 @@ export default function About({ data }: any) {
               className="w-full h-full object-cover object-center"
             >
               <source src={videoUrl} type="video/mp4" />
-              Twoja przeglądarka nie obsługuje tagu wideo.
+
+              {translations.browserError}
             </video>
 
             <div className="absolute inset-0 rounded-2xl border-[5px] border-[#a28468]/25 pointer-events-none z-10"></div>
@@ -48,8 +67,9 @@ export default function About({ data }: any) {
                     />
                   </svg>
                 </div>
+
                 <p className="text-white/80 text-[10px] tracking-[0.3em] uppercase font-medium">
-                  Kliknij, aby odtworzyć z dźwiękiem
+                  {translations.playText}
                 </p>
               </div>
             )}
@@ -58,7 +78,9 @@ export default function About({ data }: any) {
               <button
                 onClick={() => setIsMuted(!isMuted)}
                 className="absolute bottom-4 right-4 z-20 w-10 h-10 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white/80 hover:bg-black/60 hover:text-white transition-all duration-300"
-                aria-label={isMuted ? "Włącz dźwięk" : "Wyłącz dźwięk"}
+                aria-label={
+                  isMuted ? translations.turnSoundOn : translations.turnSoundOff
+                }
               >
                 {isMuted ? (
                   <svg
@@ -96,7 +118,7 @@ export default function About({ data }: any) {
             {data.kimJestem}
           </p>
 
-          <h2 className="font-playfair text-4xl  text-[#1b3745] leading-[1.1] mb-8">
+          <h2 className="font-playfair text-4xl text-[#1b3745] leading-[1.1] mb-8">
             {data.aboutTitle}
           </h2>
 
@@ -104,7 +126,9 @@ export default function About({ data }: any) {
 
           <div
             className="space-y-5 text-[#1b3745]/50 text-sm leading-relaxed [&_p]:mb-4"
-            dangerouslySetInnerHTML={{ __html: data.aboutContent }}
+            dangerouslySetInnerHTML={{
+              __html: data.aboutContent,
+            }}
           />
         </div>
       </div>

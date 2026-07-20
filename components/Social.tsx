@@ -4,9 +4,10 @@ import { FaInstagram, FaFacebookF, FaTiktok } from "react-icons/fa6";
 
 interface SocialSectionProps {
   settings: any;
+  data: any;
 }
 
-export default function SocialSection({ settings }: SocialSectionProps) {
+export default function SocialSection({ settings, data }: SocialSectionProps) {
   if (!settings?.socialMedia) return null;
 
   const social = settings.socialMedia;
@@ -14,7 +15,6 @@ export default function SocialSection({ settings }: SocialSectionProps) {
   const socials = [
     {
       name: "Instagram",
-      handle: social.instagramUrl,
       url: social.instagramUrl,
       icon: FaInstagram,
       color: "text-pink-500",
@@ -24,7 +24,6 @@ export default function SocialSection({ settings }: SocialSectionProps) {
 
     {
       name: "Facebook",
-      handle: social.facebook,
       url: social.facebook,
       icon: FaFacebookF,
       color: "text-blue-500",
@@ -34,7 +33,6 @@ export default function SocialSection({ settings }: SocialSectionProps) {
 
     {
       name: "TikTok",
-      handle: social.tiktok,
       url: social.tiktok,
       icon: FaTiktok,
       color: "text-cyan-400",
@@ -50,16 +48,15 @@ export default function SocialSection({ settings }: SocialSectionProps) {
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <p className="text-[#a28468] text-[10px] tracking-[0.5em] uppercase mb-6 font-medium">
-            SOCIAL MEDIA
+            {data?.socialTitle}
           </p>
 
           <h2 className="font-playfair text-4xl sm:text-5xl md:text-6xl text-white font-bold leading-[1.05] mb-6">
-            Znajdź nas <span className="text-[#a28468]">online</span>
+            {data?.socialTitle}
           </h2>
 
           <p className="text-[#FDFBF7]/15 text-sm mt-6 max-w-md mx-auto leading-relaxed">
-            Śledź nasze realizacje, wydarzenia i najnowsze koktajlowe
-            inspiracje.
+            {data?.SocialSectionProps}
           </p>
         </div>
 

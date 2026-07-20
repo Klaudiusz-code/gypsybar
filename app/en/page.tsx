@@ -421,9 +421,7 @@ export default async function EnHomePage() {
       <Faq data={page.sekcjaFaq} />
 
       <Contact data={page.sekcjaKontakt} settings={settings} />
-
-      <SocialSection settings={settings} />
-
+      <SocialSection settings={settings} data={page.sekcjaSocialMedia} />
       <Footer />
     </main>
   );
