@@ -3,31 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const content = {
-  pl: {
-    title: [
-      "Strona nie została",
-      <br />,
-      <span className="text-[#a28468]/40 italic font-light">odnaleziona.</span>,
-    ],
-    body: "Prawdopodobnie taki koktajl nie istnieje na tym adresie. Zmień link lub wróć na stronę główną.",
-    btn: "Powrót do strony głównej",
-  },
-  en: {
-    title: [
-      "Page not",
-      <br />,
-      <span className="text-[#a28468]/40 italic font-light">found.</span>,
-    ],
-    body: "Such a cocktail doesn't exist at this address. Change the link or return to the homepage.",
-    btn: "Back to homepage",
-  },
-};
-
 export default function Custom404() {
   const pathname = usePathname();
-  const lang = pathname.startsWith("/en") ? "en" : "pl";
-  const t = content[lang];
+  const isEnglish = pathname.startsWith("/en");
 
   return (
     <section className="relative min-h-screen bg-[#0a1218] flex items-center justify-center overflow-hidden">
@@ -38,21 +16,41 @@ export default function Custom404() {
       </div>
 
       <div className="relative z-10 text-center px-6 max-w-lg">
-        <div className="w-12 h-px bg-[#a28468]/30 mx-auto mb-10"></div>
+        <div className="w-12 h-px bg-[#a28468]/30 mx-auto mb-10" />
 
         <h1 className="font-playfair text-3xl md:text-5xl text-[#FDFBF7] mb-6 leading-[1.2]">
-          {t.title}
+          {isEnglish ? (
+            <>
+              Page not
+              <br />
+              <span className="text-[#a28468]/40 italic font-light">
+                found.
+              </span>
+            </>
+          ) : (
+            <>
+              Strona nie została
+              <br />
+              <span className="text-[#a28468]/40 italic font-light">
+                odnaleziona.
+              </span>
+            </>
+          )}
         </h1>
 
         <p className="text-[#FDFBF7]/30 text-sm md:text-base leading-relaxed mb-12 max-w-md mx-auto">
-          {t.body}
+          {isEnglish
+            ? "Such a cocktail doesn't exist at this address. Change the link or return to the homepage."
+            : "Prawdopodobnie taki koktajl nie istnieje pod tym adresem. Sprawdź link lub wróć na stronę główną."}
         </p>
 
         <Link
-          href={`/${lang}`}
+          href={isEnglish ? "/en" : "/"}
+          prefetch={false}
           className="group inline-flex items-center gap-3 bg-[#a28468] text-[#0a1218] px-8 py-4 text-[11px] font-bold tracking-[0.15em] uppercase hover:bg-[#c4a882] transition-all duration-500 shadow-lg shadow-[#a28468]/20 hover:shadow-[#a28468]/40"
         >
-          {t.btn}
+          {isEnglish ? "Back to homepage" : "Powrót do strony głównej"}
+
           <span className="group-hover:translate-x-1 transition-transform">
             →
           </span>

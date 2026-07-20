@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    // TA LINIJKA NAPRAWIA BŁĄD "resolved to private ip" NA LOCALHOST
     unoptimized: true,
 
     remotePatterns: [

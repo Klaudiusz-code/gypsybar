@@ -51,9 +51,7 @@ export default function Services({ data }: any) {
               onClick={() => setActiveIndex(isActive ? -1 : i)}
               className={`
                 group relative overflow-hidden cursor-pointer transition-all duration-700 ease-out
-                /* --- MOBILE STYLING --- */
                 h-auto rounded-2xl border border-[#1e3946]/50 bg-[#0a1218]
-                /* --- DESKTOP STYLING --- */
                 md:h-auto md:flex-1 md:rounded-2xl md:border-0
                 ${isActive ? "md:flex-[3]" : "md:flex-1"} 
                 ${!hasImage ? "" : ""}
@@ -75,6 +73,7 @@ export default function Services({ data }: any) {
                 className={`hidden md:block absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-500 ${isActive ? "opacity-100" : "opacity-0"}`}
               />
 
+              {/* --- WERSJA MOBILNA --- */}
               <div className="md:hidden relative z-10">
                 <div className="flex items-center gap-4 p-5 pb-4">
                   {hasImage && (
@@ -105,21 +104,24 @@ export default function Services({ data }: any) {
                   </div>
                 </div>
 
-                <div
-                  className={`overflow-hidden transition-all duration-500 ease-out ${
-                    isActive ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+                {/* PROSTE ROZWIJANIE - zmienia się tylko jedna klasa grid-rows */}
+                <div 
+                  className={`grid transition-all duration-500 ease-out ${
+                    isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                   }`}
                 >
-                  <div className="px-5 pb-5 pl-[76px] sm:pl-[80px]">
-                    {" "}
-                    <div className="w-8 h-px bg-[#a28468]/20 mb-3" />
-                    <p className="text-sm leading-relaxed text-[#FDFBF7]/40">
-                      {item.description}
-                    </p>
+                  <div className="overflow-hidden">
+                    <div className="px-5 pb-5 pl-[76px] sm:pl-[80px]">
+                      <div className="w-8 h-px bg-[#a28468]/20 mb-3" />
+                      <p className="text-sm leading-relaxed text-[#FDFBF7]/40">
+                        {item.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
 
+              {/* --- WERSJA DESKTOP --- */}
               <div
                 className="hidden md:flex relative z-10 h-full flex-col items-center p-8 pt-10 transition-all duration-700"
                 style={{ justifyContent: isActive ? "flex-end" : "center" }}

@@ -10,7 +10,7 @@ export default function Hero({ data }: any) {
   const lastWord = words.pop() || "";
 
   return (
-    <section className="relative w-full h-[90vh] md:h-[80vh] lg:h-[85vh] overflow-hidden bg-[#1b3745]">
+    <section className="relative w-full h-[100vh] md:h-[80vh] lg:h-[85vh] overflow-hidden bg-[#1b3745]">
       <div className="absolute inset-0 z-0">
         <img
           src="/hero.jpg"
@@ -76,7 +76,7 @@ export default function Hero({ data }: any) {
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-2">
             {data.heroButtonPrimary && (
               <a
                 href={data.heroButtonPrimary.url}
