@@ -50,7 +50,6 @@ export default function Menu({ data }: any) {
       className="relative py-32 px-6 md:px-12 bg-[#FDFBF7] overflow-hidden"
     >
       <div className="max-w-[1000px] mx-auto relative z-10">
-
         <div className="text-center mb-20">
           <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-5">
             {data.menuLabel}
@@ -63,11 +62,10 @@ export default function Menu({ data }: any) {
             </span>
           </h2>
 
-          <p className="mt-12 font-playfair text-3xl  italic text-[#a28468]">
+          <p className="mt-12 font-playfair text-xl md:text-3xl  italic text-[#a28468]">
             {data.textAlco}
           </p>
         </div>
-
 
         <div>
           {data.menuDrinks.map((drink: any, index: number) => (
@@ -96,7 +94,7 @@ export default function Menu({ data }: any) {
           ))}
         </div>
 
-        <p className="mt-8 text-center font-playfair text-3xl italic text-[#a28468]">
+        <p className="mt-12 font-playfair text-xl md:text-3xl text-center italic text-[#a28468]">
           {data.kartaDopasowanaDoWas}
         </p>
         {menuImages.length > 0 && (
@@ -116,11 +114,9 @@ export default function Menu({ data }: any) {
                 </div>
               ))}
             </div>
-
           </div>
         )}
       </div>
-
 
       {isOpen && (
         <div

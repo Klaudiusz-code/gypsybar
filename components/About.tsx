@@ -106,21 +106,6 @@ export default function About({ data }: any) {
             className="space-y-5 text-[#1b3745]/50 text-sm leading-relaxed [&_p]:mb-4"
             dangerouslySetInnerHTML={{ __html: data.aboutContent }}
           />
-
-          {data.aboutStats && data.aboutStats.length > 0 && (
-            <div className="flex gap-10 mt-12 pt-10 border-t border-[#1b3745]/10">
-              {data.aboutStats.map((stat: any, i: any) => (
-                <div key={i}>
-                  <span className="font-playfair text-4xl text-[#a28468] leading-none">
-                    {stat.value}
-                  </span>
-                  <p className="text-[#1b3745]/30 text-[10px] tracking-widest uppercase mt-1">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </section>

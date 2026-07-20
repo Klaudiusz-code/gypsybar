@@ -15,7 +15,6 @@ import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
 
 export async function generateMetadata() {
-
   const res = await fetch("https://cms.gypsysbar.pl/graphql", {
     method: "POST",
     headers: {
@@ -36,43 +35,29 @@ export async function generateMetadata() {
     cache: "no-store",
   });
 
-
   const json = await res.json();
 
-
-  console.log(
-    "SEO FULL RESPONSE:",
-    JSON.stringify(json, null, 2)
-  );
-
+  console.log("SEO FULL RESPONSE:", JSON.stringify(json, null, 2));
 
   const seo = json?.data?.page?.seo;
 
-
   console.log("SEO DATA:", seo);
 
-
   return {
-    title:
-      seo?.title || 
-      "abcs",
-
+    title: seo?.title || "abcs",
 
     description:
       seo?.description ||
       "Gypsy's Bar creates unforgettable cocktail experiences for weddings, corporate events and private celebrations.",
-
 
     openGraph: {
       title:
         seo?.title ||
         "Gypsy's Bar | Premium Mobile Cocktail Bar for Weddings & Events",
 
-
       description:
         seo?.description ||
         "Premium cocktail experience for weddings and events.",
-
 
       url: "https://gypsysbar.pl/en",
 
@@ -84,8 +69,7 @@ export async function generateMetadata() {
 
       images: [
         {
-          url:
-            "https://cms.gypsysbar.pl/wp-content/uploads/2026/07/2.jpg",
+          url: "https://cms.gypsysbar.pl/wp-content/uploads/2026/07/2.jpg",
 
           width: 1200,
 
@@ -96,30 +80,21 @@ export async function generateMetadata() {
       ],
     },
 
-
     twitter: {
       card: "summary_large_image",
 
-      title:
-        seo?.title ||
-        "Gypsy's Bar | Premium Mobile Cocktail Bar",
-
+      title: seo?.title || "Gypsy's Bar | Premium Mobile Cocktail Bar",
 
       description:
         seo?.description ||
         "Craft cocktails and professional mixology for events.",
 
-
-      images: [
-        "https://cms.gypsysbar.pl/wp-content/uploads/2026/07/2.jpg",
-      ],
+      images: ["https://cms.gypsysbar.pl/wp-content/uploads/2026/07/2.jpg"],
     },
-
 
     alternates: {
       canonical: "https://gypsysbar.pl/en",
     },
-
 
     robots: {
       index: true,
@@ -199,10 +174,6 @@ query HomePageEN {
       aboutTitle
       kimJestem
       aboutContent
-      aboutStats {
-        value
-        label
-      }
     }
 
   sekcjaOferta {
@@ -440,8 +411,7 @@ export default async function EnHomePage() {
 
       <Services data={page.sekcjaOferta} />
 
-      <Gallery data={page.sekcjaGalseria} settings={settings} />
-
+      <Gallery data={page.sekcjaGaleria} settings={settings} />
       <Testimonials data={page.sekcjaOpinie} />
 
       <Menu data={page.sekcjaMenu} />

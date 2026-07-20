@@ -150,8 +150,6 @@ query HomePage {
         url
       }
     }
-
-
     sekcjaStatystyki {
 
       statsItems {
@@ -173,24 +171,13 @@ query HomePage {
       kimJestem
       aboutTitle
       aboutContent
-
-
-      aboutStats {
-        value
-        label
-      }
     }
-
-
-
 
     sekcjaOferta {
 
       servicesLabel
       servicesTitle
       servicesDescription
-
-
       servicesItems {
         title
         description
@@ -272,8 +259,6 @@ query HomePage {
 
 
       malyNaglowek
-      tytulPakietow
-
 
 
       pakietBasic {

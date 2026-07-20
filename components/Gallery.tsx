@@ -13,7 +13,8 @@ export default function Gallery({ data, settings }: any) {
 
   const allImages = data.galleryItems.nodes;
 
-  const INITIAL_IMAGE_COUNT = 2;
+  // ZMIANA: 5 zdjęć początkowych. Razem z filmikiem daje to 6 elementów (idealne dla 2 i 3 kolumn)
+  const INITIAL_IMAGE_COUNT = 5;
   const hiddenImages = allImages.slice(INITIAL_IMAGE_COUNT);
   const hasMore = hiddenImages.length > 0;
 
@@ -36,6 +37,7 @@ export default function Gallery({ data, settings }: any) {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8">
+          {/* 1. FILMIK */}
           <div className="group relative aspect-[4/5] rounded-2xl md:rounded-3xl overflow-hidden border-2 md:border-[6px] border-white bg-gray-100 shadow-sm hover:shadow-xl hover:shadow-[#1b3745]/10 transition-all duration-500 ease-out hover:z-10 hover:scale-[1.03]">
             <video
               autoPlay
@@ -63,8 +65,6 @@ export default function Gallery({ data, settings }: any) {
               >
                 <path d="M 8 3 C 5.243 3 3 5.243 3 8 L 3 16 C 3 18.757 5.243 21 8 21 L 16 21 C 18.757 21 21 18.757 21 16 L 21 8 C 21 5.243 18.757 3 16 3 L 8 3 z M 8 5 L 16 5 C 17.654 5 19 6.346 19 8 L 19 16 C 19 17.654 17.654 19 16 19 L 8 19 C 6.346 19 5 17.654 5 16 L 5 8 C 5 6.346 6.346 5 8 5 z M 17 6 C 16.448 6 16 6.448 16 7 C 16 7.552 16.448 8 17 8 C 17.552 8 18 7.552 18 7 C 18 6.448 17.552 6 17 6 z M 12 7 C 9.243 7 7 9.243 7 12 C 7 14.757 9.243 17 12 17 C 14.757 17 17 14.757 17 12 C 17 9.243 14.757 7 12 7 z M 12 9 C 13.654 9 15 10.346 15 12 C 15 13.654 13.654 15 12 15 C 10.346 15 9 13.654 9 12 C 9 10.346 10.346 9 12 9 z" />
               </svg>
-
-              {/* Kółko z ikoną Play */}
               <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@ export default function Gallery({ data, settings }: any) {
             </a>
           </div>
 
-          {/* PIERWSZE ZDJĘCIA */}
+          {/* 2. PIERWSZE ZDJĘCIA (5 sztuk) */}
           {allImages
             .slice(0, INITIAL_IMAGE_COUNT)
             .map((img: any, i: number) => (
@@ -98,16 +98,26 @@ export default function Gallery({ data, settings }: any) {
               </div>
             ))}
 
-          {/* RESZTA - NAPRAWIONA PŁYNNA ANIMACJA */}
+          {/* 3. ROZWIJANA RESZTA - PŁYNNA ANIMACJA */}
           {hasMore && (
             <div
-              className="col-span-2 md:col-span-3 grid transition-all duration-700 ease-out"
-              // Przeniesione do style, żeby przeglądarka na 100% poprawnie zinterpretowała animację
-              style={{ gridTemplateRows: isExpanded ? "1fr" : "0fr" }}
+              className="col-span-2 md:col-span-3 grid"
+              // Zmuszamy przeglądarkę do płynnej animacji siatki
+              style={{
+                gridTemplateRows: isExpanded ? "1fr" : "0fr",
+                transition: "grid-template-rows 700ms ease-out",
+              }}
             >
-              {/* overflow-hidden i min-height: 0 są kluczowe dla tej animacji */}
+              {/* Kluczowy element animacji height: 0 -> auto */}
               <div className="overflow-hidden" style={{ minHeight: 0 }}>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8 pt-3 md:pt-8">
+                <div
+                  className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8 pt-3 md:pt-8"
+                  // Dodatkowy efekt: zdjęcia płynnie się wyłaniają z opóźnieniem
+                  style={{
+                    opacity: isExpanded ? 1 : 0,
+                    transition: "opacity 500ms ease-out 200ms",
+                  }}
+                >
                   {hiddenImages.map((img: any, i: number) => (
                     <div
                       key={`more-${i}`}
@@ -126,6 +136,7 @@ export default function Gallery({ data, settings }: any) {
           )}
         </div>
 
+        {/* PRZYCISK ROZWIJANIA */}
         {hasMore && (
           <div className="text-center mt-10 md:mt-14">
             <button

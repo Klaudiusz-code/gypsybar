@@ -91,21 +91,9 @@ export default function Packages({ data, settings }: PackagesProps) {
     >
       <div className="max-w-[1100px] mx-auto relative z-10">
         <div className="text-center mb-20 md:mb-28">
-          <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-6 font-medium">
+          <p className="text-[#a28468] text-[13] md:text-3xl font-bold tracking-[0.4em] uppercase mb-6">
             {data.malyNaglowek}
           </p>
-          <h2 className="font-playfair text-4xl md:text-6xl text-[#FDFBF7] leading-tight">
-            {data.tytulPakietow
-              ?.split(" ")
-              .map((word: string, index: number, array: string[]) => (
-                <span
-                  key={index}
-                  className={index === array.length - 1 ? "text-[#a28468]" : ""}
-                >
-                  {word}{" "}
-                </span>
-              ))}
-          </h2>
         </div>
 
         <div className="bg-[#0e1c22] border border-white/[0.05] p-8 md:p-12 rounded-sm mb-8 shadow-2xl shadow-black/30">

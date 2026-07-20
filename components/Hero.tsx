@@ -47,8 +47,10 @@ export default function Hero({ data }: any) {
 
       <div className="absolute bottom-0 left-0 w-full h-[50vh] bg-gradient-to-t from-[#0a1218] to-transparent z-20" />
 
-      <div className="relative z-40 h-full max-w-[1400px] mx-auto w-full px-6 lg:px-16 flex flex-col justify-end pt-28 pb-16 md:pt-36 md:pb-20 lg:pt-40 lg:pb-24">
-        <div className="max-w-2xl animate-fadeUp">
+      {/* FIX: Usunięto justify-end z tego diva, przeniesiono niżej */}
+      <div className="relative z-40 h-full max-w-[1400px] mx-auto w-full px-6 lg:px-16 flex flex-col mt-4 md:mt-0 pt-32 pb-16 md:pt-36 md:pb-20 lg:pt-36 lg:pb-24">
+        {/* FIX: Dodano mt-auto - to wpycha całość na sam dół, ale bezpiecznie, bez wchodzenia pod nav */}
+        <div className="max-w-2xl animate-fadeUp mt-auto">
           <div className="mb-4 md:mb-6">
             <span className="text-[#a28468] text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase font-bold">
               Gypsy&apos;s Cocktail Bar

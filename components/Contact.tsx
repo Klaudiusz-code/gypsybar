@@ -167,21 +167,13 @@ export default function Contact({ data, settings }: any) {
           </form>
         </div>
         <div className="flex flex-col items-center md:items-end pt-8 md:pt-0">
-          <div className="relative w-full max-w-xs md:max-w-sm aspect-[3/4] rounded-2xl overflow-hidden border-2 border-[#a28468]/20 mb-10 group shadow-2xl shadow-black/50">
+          <div className="relative w-full max-w-xs md:max-w-sm aspect-[3/4] rounded-2xl overflow-hidden border-2 border-[#a28468]/20 mb-10 group ">
             <Image
               src={avatarUrl}
               alt="Gypsy's Bar creator"
               fill
-              className="object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
+              className="object-cover object-top  group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
             />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a1218] via-[#0a1218]/20 to-transparent"></div>
-
-            <div className="absolute bottom-6 left-6 right-6">
-              <p className="font-playfair text-2xl text-[#FDFBF7]">
-                Gypsy&apos;s
-              </p>
-            </div>
           </div>
 
           <div className="w-full max-w-xs md:max-w-sm space-y-3">
