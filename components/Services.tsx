@@ -34,7 +34,6 @@ export default function Services({ data }: any) {
         </p>
       </div>
 
-      {/* Mobile: kolumna (flex-col). Desktop: wymuszony wiersz (md:flex-row) */}
       <div className="max-w-2xl sm:max-w-3xl md:max-w-[1400px] mx-auto relative z-10 flex flex-col md:flex-row md:h-[550px] lg:h-[600px] gap-4">
         {data.servicesItems.map((item: any, i: any) => {
           const isActive = activeIndex === i;
@@ -50,12 +49,10 @@ export default function Services({ data }: any) {
                 border border-[#1e3946]/30 bg-[#0a1218]
                 ${isActive ? "border-[#a28468]/30 shadow-[0_0_50px_-15px_rgba(162,132,104,0.4)]" : ""}
                 
-                // STARY DESKTOP (flex-row wymusi szerokość, flex-1/flex-3 zadziała)
                 md:flex-1 md:rounded-2xl md:border-0 md:shadow-none
                 ${isActive ? "md:flex-[3]" : "md:flex-1"} 
               `}
             >
-              
               {/* ========================================= */}
               {/* --- WERSJA MOBILNA (PIĘKNE PIONOWE KARTY) --- */}
               {/* ========================================= */}
@@ -73,7 +70,7 @@ export default function Services({ data }: any) {
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                  
+
                   {/* Góra: Numer i szklany przycisk "+" */}
                   <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-10">
                     <span className="font-playfair text-lg text-[#a28468]/60 font-light">
@@ -86,7 +83,9 @@ export default function Services({ data }: any) {
                           : ""
                       }`}
                     >
-                      <span className={`text-xl leading-none font-thin transition-colors duration-500 ${isActive ? "text-white" : "text-white/80"}`}>
+                      <span
+                        className={`text-xl leading-none font-thin transition-colors duration-500 ${isActive ? "text-white" : "text-white/80"}`}
+                      >
                         +
                       </span>
                     </div>
@@ -118,7 +117,6 @@ export default function Services({ data }: any) {
                 </div>
               </div>
 
-
               {/* ========================================= */}
               {/* --- WERSJA DESKTOP (STARY AKORDEON) --- */}
               {/* ========================================= */}
@@ -128,8 +126,9 @@ export default function Services({ data }: any) {
                     src={imageUrl}
                     alt={item.title}
                     fill
+                    /* TUTAJ JEST ZMIANA: opacity-0 zmienione na opacity-30 */
                     className={`object-cover transition-all duration-700 ${
-                      isActive ? "opacity-40 scale-100" : "opacity-0 scale-110"
+                      isActive ? "opacity-50 scale-100" : "opacity-30 scale-110"
                     }`}
                   />
                 )}
@@ -137,8 +136,10 @@ export default function Services({ data }: any) {
                 {/* Tło kafelka na desktopie */}
                 <div
                   className={`absolute inset-0 transition-colors duration-500 ${
-                    !hasImage ? "bg-[#131f27]" : "bg-[#131f27] group-hover:bg-[#1a2b35]"
-                  } ${isActive ? "bg-transparent" : ""}`}
+                    !hasImage
+                      ? "bg-[#131f27]"
+                      : "bg-[#131f27] group-hover:bg-[#1a2b35]"
+                  } ${isActive ? "!bg-transparent" : ""}`}
                 />
 
                 <div
@@ -184,7 +185,6 @@ export default function Services({ data }: any) {
                   </div>
                 </div>
               </div>
-
             </div>
           );
         })}
