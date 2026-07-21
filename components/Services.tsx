@@ -34,86 +34,83 @@ export default function Services({ data }: any) {
         </p>
       </div>
 
-      <div className="max-w-[1400px] mx-auto relative z-10 flex flex-col md:flex-row h-auto md:h-[550px] lg:h-[600px] gap-3 md:gap-4">
+      {/* Mobile: kolumna (flex-col). Desktop: wymuszony wiersz (md:flex-row) */}
+      <div className="max-w-2xl sm:max-w-3xl md:max-w-[1400px] mx-auto relative z-10 flex flex-col md:flex-row md:h-[550px] lg:h-[600px] gap-4">
         {data.servicesItems.map((item: any, i: any) => {
           const isActive = activeIndex === i;
           const imageUrl = item.imageOffer?.node?.sourceUrl;
           const hasImage = !!imageUrl;
-          const imgClasses = `object-cover transition-all duration-1000 hidden md:block ${
-            isActive
-              ? "opacity-30 scale-100 md:opacity-40"
-              : "opacity-0 scale-110"
-          }`;
 
           return (
             <div
               key={i}
               onClick={() => setActiveIndex(isActive ? -1 : i)}
               className={`
-                group relative overflow-hidden cursor-pointer transition-all duration-700 ease-out
-                h-auto rounded-2xl border border-[#1e3946]/50 bg-[#0a1218]
-                md:h-auto md:flex-1 md:rounded-2xl md:border-0
+                group relative overflow-hidden cursor-pointer rounded-2xl transition-all duration-500 ease-out
+                border border-[#1e3946]/30 bg-[#0a1218]
+                ${isActive ? "border-[#a28468]/30 shadow-[0_0_50px_-15px_rgba(162,132,104,0.4)]" : ""}
+                
+                // STARY DESKTOP (flex-row wymusi szerokość, flex-1/flex-3 zadziała)
+                md:flex-1 md:rounded-2xl md:border-0 md:shadow-none
                 ${isActive ? "md:flex-[3]" : "md:flex-1"} 
-                ${!hasImage ? "" : ""}
               `}
             >
-              {hasImage && (
-                <Image
-                  src={imageUrl}
-                  alt={item.title}
-                  fill
-                  className={imgClasses}
-                />
-              )}
-
-              <div
-                className={`hidden md:block absolute inset-0 transition-colors duration-500 ${!hasImage ? "bg-[#131f27]" : isActive ? "bg-black/20" : "bg-[#131f27] group-hover:bg-[#1a2b35]"}`}
-              />
-              <div
-                className={`hidden md:block absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-500 ${isActive ? "opacity-100" : "opacity-0"}`}
-              />
-
-              {/* --- WERSJA MOBILNA --- */}
-              <div className="md:hidden relative z-10">
-                <div className="flex items-center gap-4 p-5 pb-4">
+              
+              {/* ========================================= */}
+              {/* --- WERSJA MOBILNA (PIĘKNE PIONOWE KARTY) --- */}
+              {/* ========================================= */}
+              <div className="md:hidden">
+                {/* Duże, cinematiczne zdjęcie */}
+                <div className="relative h-56 sm:h-64 w-full">
                   {hasImage && (
-                    <div className="w-12 h-12 flex-shrink-0 rounded-lg overflow-hidden border border-[#1e3946]">
-                      <img
-                        src={imageUrl}
-                        alt=""
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                    <Image
+                      src={imageUrl}
+                      alt={item.title}
+                      fill
+                      sizes="100vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      priority={i === 0}
+                    />
                   )}
-
-                  <h3 className="font-playfair text-lg sm:text-xl text-[#FDFBF7] tracking-tight flex-1 min-w-0 leading-tight">
-                    {item.title}
-                  </h3>
-
-                  <div className="flex items-center gap-3 flex-shrink-0">
-                    <span className="font-playfair text-lg text-[#a28468]/30 font-light">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                  
+                  {/* Góra: Numer i szklany przycisk "+" */}
+                  <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-10">
+                    <span className="font-playfair text-lg text-[#a28468]/60 font-light">
                       0{i + 1}
                     </span>
                     <div
-                      className={`w-6 h-6 rounded-full border border-[#a28468]/30 flex items-center justify-center transition-all duration-500 ${isActive ? "rotate-45 bg-[#a28468]/20 border-[#a28468]/50" : ""}`}
+                      className={`w-9 h-9 flex-shrink-0 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-sm bg-white/10 transition-all duration-500 ${
+                        isActive
+                          ? "rotate-45 bg-[#a28468] border-[#a28468] backdrop-blur-none"
+                          : ""
+                      }`}
                     >
-                      <span className="text-[#a28468] text-xs leading-none font-light">
+                      <span className={`text-xl leading-none font-thin transition-colors duration-500 ${isActive ? "text-white" : "text-white/80"}`}>
                         +
                       </span>
                     </div>
                   </div>
+
+                  {/* Dół: Duży tytuł */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+                    <h3 className="font-playfair text-2xl sm:text-3xl text-[#FDFBF7] font-medium tracking-tight leading-tight">
+                      {item.title}
+                    </h3>
+                  </div>
                 </div>
 
-                {/* PROSTE ROZWIJANIE - zmienia się tylko jedna klasa grid-rows */}
-                <div 
+                {/* Rozwijany panel z opisem i złotą kreską */}
+                <div
                   className={`grid transition-all duration-500 ease-out ${
-                    isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    isActive
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="px-5 pb-5 pl-[76px] sm:pl-[80px]">
-                      <div className="w-8 h-px bg-[#a28468]/20 mb-3" />
-                      <p className="text-sm leading-relaxed text-[#FDFBF7]/40">
+                    <div className="p-5 sm:p-6 bg-[#0f1a1f]/60 backdrop-blur-xl border-l-2 border-[#a28468]/40">
+                      <p className="text-sm sm:text-base leading-relaxed text-[#FDFBF7]/80">
                         {item.description}
                       </p>
                     </div>
@@ -121,38 +118,73 @@ export default function Services({ data }: any) {
                 </div>
               </div>
 
-              {/* --- WERSJA DESKTOP --- */}
-              <div
-                className="hidden md:flex relative z-10 h-full flex-col items-center p-8 pt-10 transition-all duration-700"
-                style={{ justifyContent: isActive ? "flex-end" : "center" }}
-              >
+
+              {/* ========================================= */}
+              {/* --- WERSJA DESKTOP (STARY AKORDEON) --- */}
+              {/* ========================================= */}
+              <div className="hidden md:block relative w-full h-full">
+                {hasImage && (
+                  <Image
+                    src={imageUrl}
+                    alt={item.title}
+                    fill
+                    className={`object-cover transition-all duration-700 ${
+                      isActive ? "opacity-40 scale-100" : "opacity-0 scale-110"
+                    }`}
+                  />
+                )}
+
+                {/* Tło kafelka na desktopie */}
                 <div
-                  className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-90 whitespace-nowrap transition-all duration-300 pointer-events-none ${isActive ? "opacity-0" : "opacity-100"}`}
-                >
-                  <span className="font-playfair text-xl lg:text-2xl text-white/20 group-hover:text-white/40 tracking-wider transition-colors">
-                    {item.title}
-                  </span>
-                </div>
+                  className={`absolute inset-0 transition-colors duration-500 ${
+                    !hasImage ? "bg-[#131f27]" : "bg-[#131f27] group-hover:bg-[#1a2b35]"
+                  } ${isActive ? "bg-transparent" : ""}`}
+                />
 
                 <div
-                  className={`absolute top-6 right-6 transition-opacity ${isActive ? "opacity-50" : "opacity-30"}`}
+                  className="relative z-10 h-full flex flex-col items-center p-8 pt-10 transition-all duration-700"
+                  style={{ justifyContent: isActive ? "flex-end" : "center" }}
                 >
-                  <span className="font-playfair text-4xl text-[#a28468] font-light">
-                    0{i + 1}
-                  </span>
-                </div>
+                  {/* Obrócony tytuł na środku */}
+                  <div
+                    className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-90 whitespace-nowrap transition-all duration-300 pointer-events-none ${
+                      isActive ? "opacity-0" : "opacity-100"
+                    }`}
+                  >
+                    <span className="font-playfair text-xl lg:text-2xl text-white/20 group-hover:text-white/40 tracking-wider transition-colors">
+                      {item.title}
+                    </span>
+                  </div>
 
-                <div
-                  className={`w-full transition-all duration-500 delay-200 pb-8 ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                >
-                  <h3 className="font-playfair text-2xl md:text-3xl text-[#FDFBF7] mb-3 tracking-tight">
-                    {item.title}
-                  </h3>
-                  <p className="text-[#FDFBF7]/40 text-sm leading-relaxed max-w-sm">
-                    {item.description}
-                  </p>
+                  {/* Numer w rogu */}
+                  <div
+                    className={`absolute top-6 right-6 transition-opacity ${
+                      isActive ? "opacity-50" : "opacity-30"
+                    }`}
+                  >
+                    <span className="font-playfair text-4xl text-[#a28468] font-light">
+                      0{i + 1}
+                    </span>
+                  </div>
+
+                  {/* Szczegóły po rozwinięciu */}
+                  <div
+                    className={`w-full transition-all duration-500 delay-200 pb-8 ${
+                      isActive
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-8"
+                    }`}
+                  >
+                    <h3 className="font-playfair text-2xl md:text-3xl text-[#FDFBF7] mb-3 tracking-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-[#FDFBF7]/40 text-sm leading-relaxed max-w-sm">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
               </div>
+
             </div>
           );
         })}
