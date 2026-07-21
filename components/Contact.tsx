@@ -116,6 +116,23 @@ export default function Contact({ data, settings }: any) {
 
             <div className="relative border-b border-[#FDFBF7]/10 focus-within:border-[#a28468] transition-colors pb-3">
               <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder=" "
+                required
+                className="peer w-full bg-transparent text-[#FDFBF7] placeholder-transparent focus:outline-none text-sm"
+              />
+
+              <label
+                htmlFor="email"
+                className="absolute left-0 top-0 text-sm text-[#FDFBF7]/20 transition-all peer-placeholder-shown:top-0 peer-placeholder-shown:text-base peer-focus:-top-5 peer-focus:text-[10px] peer-focus:text-[#a28468] peer-focus:tracking-widest peer-focus:uppercase peer-[:not(:placeholder-shown)]:-top-5 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:text-[#FDFBF7]/40"
+              >
+                Email
+              </label>
+            </div>
+            <div className="relative border-b border-[#FDFBF7]/10 focus-within:border-[#a28468] transition-colors pb-3">
+              <input
                 type="date"
                 id="date"
                 name="date"
