@@ -118,7 +118,7 @@ export default function Services({ data }: any) {
               </div>
 
               {/* ========================================= */}
-              {/* --- WERSJA DESKTOP (STARY AKORDEON) --- */}
+              {/* --- WERSJA DESKTOP (ZDJĘCIA OD RAZU WIDOCZNE) --- */}
               {/* ========================================= */}
               <div className="hidden md:block relative w-full h-full">
                 {hasImage && (
@@ -126,20 +126,23 @@ export default function Services({ data }: any) {
                     src={imageUrl}
                     alt={item.title}
                     fill
-                    /* TUTAJ JEST ZMIANA: opacity-0 zmienione na opacity-30 */
+                    // ZMIANA: opacity ustawione na 100% domyślnie, usunięty scale-110
                     className={`object-cover transition-all duration-700 ${
-                      isActive ? "opacity-50 scale-100" : "opacity-30 scale-110"
+                      isActive
+                        ? "opacity-80 scale-100"
+                        : "opacity-100 scale-100"
                     }`}
                   />
                 )}
 
-                {/* Tło kafelka na desktopie */}
+                {/* ZMIANA: Zamiast pełnego, nieprzezroczystego tła używamy gradientu, 
+                    żeby zdjęcie było widoczne, ale tekst się wyróżniał */}
                 <div
-                  className={`absolute inset-0 transition-colors duration-500 ${
+                  className={`absolute inset-0 transition-opacity duration-500 ${
                     !hasImage
                       ? "bg-[#131f27]"
-                      : "bg-[#131f27] group-hover:bg-[#1a2b35]"
-                  } ${isActive ? "!bg-transparent" : ""}`}
+                      : "bg-gradient-to-t from-[#0f1a1f] via-[#0f1a1f]/50 to-transparent"
+                  } ${isActive ? "opacity-70" : "opacity-100"}`}
                 />
 
                 <div
@@ -152,7 +155,7 @@ export default function Services({ data }: any) {
                       isActive ? "opacity-0" : "opacity-100"
                     }`}
                   >
-                    <span className="font-playfair text-xl lg:text-2xl text-white/20 group-hover:text-white/40 tracking-wider transition-colors">
+                    <span className="font-playfair text-xl lg:text-2xl text-white/200 group-hover:text-white/50 tracking-wider transition-colors drop-shadow-lg">
                       {item.title}
                     </span>
                   </div>
@@ -160,15 +163,14 @@ export default function Services({ data }: any) {
                   {/* Numer w rogu */}
                   <div
                     className={`absolute top-6 right-6 transition-opacity ${
-                      isActive ? "opacity-50" : "opacity-30"
+                      isActive ? "opacity-70" : "opacity-50"
                     }`}
                   >
-                    <span className="font-playfair text-4xl text-[#a28468] font-light">
+                    <span className="font-playfair text-4xl text-[#a28468] font-light drop-shadow-lg">
                       0{i + 1}
                     </span>
                   </div>
 
-                  {/* Szczegóły po rozwinięciu */}
                   <div
                     className={`w-full transition-all duration-500 delay-200 pb-8 ${
                       isActive
@@ -176,10 +178,10 @@ export default function Services({ data }: any) {
                         : "opacity-0 translate-y-8"
                     }`}
                   >
-                    <h3 className="font-playfair text-2xl md:text-3xl text-[#FDFBF7] mb-3 tracking-tight">
+                    <h3 className="font-playfair text-2xl md:text-3xl text-[#FDFBF7] mb-3 tracking-tight drop-shadow-lg">
                       {item.title}
                     </h3>
-                    <p className="text-[#FDFBF7]/40 text-sm leading-relaxed max-w-sm">
+                    <p className="text-[#FDFBF7]/60 text-sm leading-relaxed max-w-sm drop-shadow-md">
                       {item.description}
                     </p>
                   </div>
