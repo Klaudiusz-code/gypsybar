@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   FaWhatsapp,
@@ -10,6 +11,9 @@ import {
 } from "react-icons/fa";
 
 export default function Contact({ data, settings }: any) {
+  const pathname = usePathname();
+  const lang = pathname.startsWith("/en") ? "en" : "pl";
+
   if (!data) return null;
 
   const globalContact = settings?.globalSettingsV2 || settings;
@@ -176,9 +180,13 @@ export default function Contact({ data, settings }: any) {
               }`}
             >
               {isFormSent
-                ? "Sent! We will contact you soon."
+                ? lang === "en"
+                  ? "Sent! We will contact you soon."
+                  : "Wysłano! Wkrótce się z Tobą skontaktujemy."
                 : isSending
-                  ? "Sending..."
+                  ? lang === "en"
+                    ? "Sending..."
+                    : "Wysyłanie..."
                   : data.formButtonText}
             </button>
           </form>

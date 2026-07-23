@@ -149,7 +149,7 @@ export default function Testimonials({ data }: any) {
   const googleButton = data.przycisk;
 
   return (
-    <section className="relative pt-24 pb-28 px-6 md:px-12 bg-[#0a1218] overflow-hidden">
+    <section id="opinie" className="relative pt-24 pb-28 px-6 md:px-12 bg-[#0a1218] overflow-hidden">
       <div className="max-w-[1100px] mx-auto relative z-10">
         <div className="text-center mb-14 md:mb-20">
           <p className="text-[#a28468] text-[10px] tracking-[0.4em] uppercase mb-5 font-medium">
