@@ -1,5 +1,7 @@
+
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -14,7 +16,6 @@ const inter = Inter({
   display: "swap",
 });
 
-
 export const metadata: Metadata = {
   title: {
     default: "Gypsy's Bar | Premium Mobile Cocktail Bar",
@@ -23,7 +24,6 @@ export const metadata: Metadata = {
 
   description:
     "Premium mobile cocktail bar for weddings, corporate events and private celebrations. Craft cocktails, professional mixology and unforgettable experiences.",
-
 
   keywords: [
     "mobile cocktail bar",
@@ -34,28 +34,20 @@ export const metadata: Metadata = {
     "mixology",
   ],
 
-
   metadataBase: new URL("https://gypsysbar.pl"),
-
 
   alternates: {
     canonical: "/",
   },
 
-
   openGraph: {
     title: "Gypsy's Bar | Premium Mobile Cocktail Bar",
     description:
       "Craft cocktails and professional mixology brought directly to your event.",
-
     url: "https://gypsysbar.pl",
-
     siteName: "Gypsy's Bar",
-
     locale: "pl_PL",
-
     type: "website",
-
     images: [
       {
         url: "/hero.jpg",
@@ -66,20 +58,13 @@ export const metadata: Metadata = {
     ],
   },
 
-
   twitter: {
     card: "summary_large_image",
-
     title: "Gypsy's Bar | Premium Mobile Cocktail Bar",
-
     description:
       "Premium cocktails and professional mixology for weddings and events.",
-
-    images: [
-      "/hero.jpg",
-    ],
+    images: ["/hero.jpg"],
   },
-
 
   icons: {
     icon: [
@@ -111,12 +96,9 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
 
-
   manifest: "/site.webmanifest",
 
-
   themeColor: "#0a1218",
-
 
   robots: {
     index: true,
@@ -127,7 +109,6 @@ export const metadata: Metadata = {
     },
   },
 };
-
 
 export default function RootLayout({
   children,
@@ -140,6 +121,36 @@ export default function RootLayout({
       className={`${playfair.variable} ${inter.variable}`}
     >
       <body className="font-sans text-white antialiased">
+        <Script
+          id="meta-pixel"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+              s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+
+              fbq('init', '1439313574243322');
+              fbq('track', 'PageView');
+            `,
+          }}
+        />
+
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src="https://www.facebook.com/tr?id=1439313574243322&ev=PageView&noscript=1"
+            alt=""
+          />
+        </noscript>
+
         {children}
       </body>
     </html>
