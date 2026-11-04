@@ -75,7 +75,7 @@ export default function Menu({ data }: any) {
             >
               <div className="flex gap-6">
                 <span className="font-playfair text-2xl text-[#a28468]/30">
-                  0{index + 1}
+                  {index + 1}
                 </span>
 
                 <div>

@@ -74,7 +74,7 @@ export default function Services({ data }: any) {
                   {/* Góra: Numer i szklany przycisk "+" */}
                   <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-10">
                     <span className="font-playfair text-lg text-[#a28468]/60 font-light">
-                      0{i + 1}
+                      {i + 1}
                     </span>
                     <div
                       className={`w-9 h-9 flex-shrink-0 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-sm bg-white/10 transition-all duration-500 ${
