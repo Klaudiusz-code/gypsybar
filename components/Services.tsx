@@ -167,7 +167,7 @@ export default function Services({ data }: any) {
                     }`}
                   >
                     <span className="font-playfair text-4xl text-[#a28468] font-light drop-shadow-lg">
-                      0{i + 1}
+                      {i + 1}
                     </span>
                   </div>
 
